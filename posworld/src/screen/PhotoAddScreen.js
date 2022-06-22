@@ -1,58 +1,63 @@
-// import { useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 import { Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import HeaderScreen from './HeaderScreen';
 // import { insertPhoto } from "../store/photos";
+// import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const PhotoAddScreen = (/* { navigation } */) => {
-    /*const dispatch = useDispatch();
+    state = { img: null };
+    /* const dispatch = useDispatch();
     const [photo, setPhoto] = useState({
         title: '',
         img: '',
         content: '',
         file: '',
-    }); 
+    }); */
     const [previewImg, setPreviewImg] = useState('');
     let openImagePickerAsync = async () => {
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
         if (permissionResult.granted === false) {
-            alert('Permission to access camera roll is required');
+            alert('Permission to access camera roll is required!');
             return;
         }
 
         let pickerResult = await ImagePicker.launchCameraAsync({ base64: true });
 
         console.log('pickerResult: ', pickerResult);
-        const splitUri = pickerResult.uri.split('/');
+
+        /* const splitUri = pickerResult.uri.split('/');
         const img = `${splitUri[splitUri.length - 1]}`;
         const splitUriType = pickerResult.uri.split('.');
         const type = splitUriType[splitUriType.length - 1];
-        const file = { uri: pickerResult.uri, name: img, type };
+        const file = { uri: pickerResult.uri, name: img, type }; */
 
-        setPhoto({
+        /* setPhoto({
             ...photo,
             title,
             img,
             content,
             file,
-        });
+        }); */
         setPreviewImg(pickerResult.uri);
-    }; */
+    };
 
     const onSubmit = () => {
         dispatch(insertPhoto(photo));
         //navigation.goBack();
     };
 
+    let { image } = this.state;
     return (
         <View>
             <HeaderScreen name={'사진 등록'}></HeaderScreen>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={openImagePickerAsync}>
                 <Text style={styles.text}>사진 선택</Text>
             </TouchableOpacity>
             {/* {previewImg ? <Image source={{ uri: previewImg }} style={{ height: 200, width: 200 }}></Image> : null} */}
+            {image == null ? null : <Image source={{ uri: 'C:UsershjuheOneDrivePicturesimage1.jpg' }} />}
             <Text style={styles.text}>제목</Text>
             <TextInput
                 multiline={true}

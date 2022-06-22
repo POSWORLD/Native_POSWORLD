@@ -5,6 +5,7 @@ import IonIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Materiallcons from "react-native-vector-icons/MaterialIcons";
+import PhotoScreen from "../photo/PhotoScreen";
 const Tab = createMaterialBottomTabNavigator();
 function BottomNavigation() {
   return (
@@ -14,7 +15,6 @@ function BottomNavigation() {
         screenOptions={{
           tabBarIndicatorStyle: {
             backgroundColor: "#009688",
-            tabBarLabel: true,
           },
           tabBarActiveTintColor: "#009688",
         }}
@@ -31,7 +31,7 @@ function BottomNavigation() {
         />
         <Tab.Screen
           name="Photo"
-          component={HomeScreen}
+          component={PhotoScreen}
           options={{
             tabBarLabel: "사진첩",
             tabBarIcon: ({ color }) => (

@@ -1,20 +1,23 @@
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import HeaderScreen from "../HeaderScreen";
+import { Dimensions } from "react-native";
 import { FAB } from "react-native-paper";
 function PhotoScreen() {
   return (
-    <View>
-      <HeaderScreen name="사진첩" />
-      <View>
+    <View style={{ flex: 1 }}>
+      <HeaderScreen style={{ flex: 1 }} name="사진첩" />
+      <View style={{ flex: 5 }}>
         <FlatList renderItem={(item) => renderItem(item)}></FlatList>
       </View>
-      <FAB
-        position="right"
-        style={styles.fab}
-        icon="plus"
-        onPress={() => console.log("Pressed")}
-        size="small"
-      />
+      <View style={{ flex: 1 }}>
+        <FAB
+          position="right"
+          style={styles.fab}
+          icon="plus"
+          onPress={() => console.log("Pressed")}
+          size="small"
+        />
+      </View>
     </View>
   );
 }
@@ -39,17 +42,18 @@ const renderItem = ({ item }) => {
   );
 };
 
+const windowHeight = Dimensions.get("window").height;
 const styles = StyleSheet.create({
   fabButton: {
     position: "absolute",
     bottom: 0,
-    right: 10,
+    right: 0,
   },
   fab: {
     position: "absolute",
     margin: 16,
     right: 0,
-    bottom: 0,
+    flex: 1,
   },
 });
 export default PhotoScreen;

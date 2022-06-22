@@ -1,32 +1,55 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import AddButton from "../button/AddButton";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import HeaderScreen from "../HeaderScreen";
+import { FAB } from "react-native-paper";
 function PhotoScreen() {
   return (
     <View>
       <HeaderScreen name="사진첩" />
       <View>
-        <Image
-          source={{
-            uri: "https://post-phinf.pstatic.net/MjAxNzA4MDVfMTQz/MDAxNTAxOTE2MzMzOTI0.X0P-issPTorlZUgj6b7R6hV00t-x2eyiHWJSeCd3ABgg.Od4aW4_e5facHW4WjXaMCeOaYBE6FEdC76UQotMwwPYg.JPEG/mug_obj_201708051558543048.jpg?type=w1080",
-          }}
-          style={{ width: 128, height: 128 }}
-          resizeMode="cover"
-        ></Image>
-        <Image
-          source={{
-            uri: "https://post-phinf.pstatic.net/MjAxNzA4MDVfMTQz/MDAxNTAxOTE2MzMzOTI0.X0P-issPTorlZUgj6b7R6hV00t-x2eyiHWJSeCd3ABgg.Od4aW4_e5facHW4WjXaMCeOaYBE6FEdC76UQotMwwPYg.JPEG/mug_obj_201708051558543048.jpg?type=w1080",
-          }}
-          style={{ width: 128, height: 128 }}
-          resizeMode="cover"
-        ></Image>
+        <FlatList renderItem={(item) => renderItem(item)}></FlatList>
       </View>
-      <View>
-        <AddButton />
-      </View>
+      <FAB
+        position="right"
+        style={styles.fab}
+        icon="plus"
+        onPress={() => console.log("Pressed")}
+        size="small"
+      />
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const renderItem = ({ item }) => {
+  return (
+    //todo
+
+    <View style={{ margin: 10, borderColor: "gray", borderWidth: 1 }}>
+      <Link to={{ screen: "PostDetail", params: item }}>
+        <Text>{item.userName}</Text>
+        <Text>{`${IMG_PATH}${item.img}`}</Text>
+        <Image
+          source={{ uri: `${IMG_PATH}${item.img}` }}
+          style={{ width: 100, height: 100 }}
+        ></Image>
+        <View>
+          <Text>{item.content}</Text>
+        </View>
+      </Link>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  fabButton: {
+    position: "absolute",
+    bottom: 0,
+    right: 10,
+  },
+  fab: {
+    position: "absolute",
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
+});
 export default PhotoScreen;

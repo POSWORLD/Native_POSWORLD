@@ -40,7 +40,7 @@ const LoginScreen = () => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity>
-        <Text style={styles.forgot_button}>회원가입</Text>
+        <Text style={styles.forgot_button}>회원가입.</Text>
       </TouchableOpacity>
     </View>
   );

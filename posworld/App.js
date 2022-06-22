@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import BottomNavigation from './src/screen/navigation/BottomNavigation';
+import IndexNavigate from './src/screen/navigation/IndexNavigate';
 
 export default function App() {
    return (
       <SafeAreaProvider>
          <SafeAreaView style={{ flex: 1 }}>
-            <BottomNavigation></BottomNavigation>
+            <IndexNavigate></IndexNavigate>
          </SafeAreaView>
       </SafeAreaProvider>
    );

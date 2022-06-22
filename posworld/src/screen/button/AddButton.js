@@ -5,7 +5,7 @@ function AddButton() {
   return (
     <View style={styles.wrapper}>
       <Pressable style={styles.circle}>
-        <AntDesign name="plus" onPress size={24} />
+        <AntDesign name="plus" size={24} />
       </Pressable>
     </View>
   );

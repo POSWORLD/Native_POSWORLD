@@ -1,7 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import IndexNavigate from './src/screen/navigation/IndexNavigate';
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import LoginScreen from "./src/screen/LoginScreen";
+import BottomNavigation from "./src/screen/navigation/BottomNavigation";
+
 
 export default function App() {
    return (

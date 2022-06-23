@@ -59,6 +59,7 @@ function BottomNavigation() {
          />
       </Tab.Navigator>
    );
+
 }
 
 export default BottomNavigation;

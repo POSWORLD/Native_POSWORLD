@@ -5,20 +5,20 @@ import LoginScreen from "./src/screen/LoginScreen";
 import BottomNavigation from "./src/screen/navigation/BottomNavigation";
 
 export default function App() {
-  return (
-    <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <BottomNavigation></BottomNavigation>
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
+   return (
+      <SafeAreaProvider>
+         <SafeAreaView style={{ flex: 1 }}>
+            <BottomNavigation></BottomNavigation>
+         </SafeAreaView>
+      </SafeAreaProvider>
+   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+   container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+   },
 });

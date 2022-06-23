@@ -9,11 +9,13 @@ import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { createPcomment, selectPcomment } from "../../store/pComments";
+import { useIsFocused } from "@react-navigation/native";
 function PCommentScreen() {
   const dispatch = useDispatch();
   const pComments = useSelector((state) => state.pComments);
   const commentList = useSelector((state) => state.pComments.comments);
   console.log("commentList", commentList);
+  const isFocused = useIsFocused();
   const [message, setMessage] = useState({
     pid: "1",
     content: "",
@@ -38,14 +40,15 @@ function PCommentScreen() {
   useEffect(() => {
     console.log("select");
     commentPatch();
-  }, []);
+  }, [isFocused]);
   return (
     <>
       <HeaderScreen name="댓글" />
       <View style={styles.message}>
         <AntDesign name="message1" size={18}></AntDesign>
         <Text style={styles.messageText}>
-          <Text style={{ fontWeight: "bold" }}> 1개</Text>의 댓글이 있어요.
+          <Text style={{ fontWeight: "bold" }}> {commentList.length}개</Text>의
+          댓글이 있어요.
         </Text>
       </View>
       <View style={{ flex: 10, top: 0 }}>

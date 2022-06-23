@@ -1,17 +1,18 @@
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import LoginScreen from "./src/screen/LoginScreen";
-import BottomNavigation from "./src/screen/navigation/BottomNavigation";
-
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Provider } from 'react-redux';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import IndexNavigate from './src/screen/navigation/IndexNavigate';
+import store from './src/store/store';
 
 export default function App() {
    return (
-      <SafeAreaProvider>
-         <SafeAreaView style={{ flex: 1 }}>
-            <IndexNavigate></IndexNavigate>
-         </SafeAreaView>
-      </SafeAreaProvider>
+      <Provider store={store}>
+         <SafeAreaProvider>
+            <SafeAreaView style={{ flex: 1 }}>
+               <IndexNavigate></IndexNavigate>
+            </SafeAreaView>
+         </SafeAreaProvider>
+      </Provider>
    );
 }
 

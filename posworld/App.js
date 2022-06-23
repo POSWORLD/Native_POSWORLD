@@ -4,11 +4,12 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import LoginScreen from "./src/screen/LoginScreen";
 import BottomNavigation from "./src/screen/navigation/BottomNavigation";
 
+
 export default function App() {
    return (
       <SafeAreaProvider>
          <SafeAreaView style={{ flex: 1 }}>
-            <BottomNavigation></BottomNavigation>
+            <IndexNavigate></IndexNavigate>
          </SafeAreaView>
       </SafeAreaProvider>
    );

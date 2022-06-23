@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, Text, View } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 function HeaderScreen({ name }) {
   const { top } = useSafeAreaInsets();
   return (

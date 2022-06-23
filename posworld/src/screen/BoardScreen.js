@@ -1,18 +1,18 @@
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import HeaderScreen from './HeaderScreen';
+
 import { AntDesign } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
-import BoardAddScreen from './BoardAddScreen';
 
-const BoardScreen = ({ board }) => {
+const BoardScreen = ({ navigation }) => {
    return (
       <View>
-         {/*  <FlatList data={board} renderItem={item => renderItem(item)}></FlatList>; */}
          <HeaderScreen name="방명록"></HeaderScreen>
          <View style={styles.container}>
             <View style={styles.boardlist}></View>
             <View style={styles.iconbutton}>
-               <AntDesign name="form" size={50} color="black" />
+               <AntDesign name="form" size={50} color="black" onPress={() => navigation.navigate('BoardAdd')} />
+               {/* <AntDesign name="form" size={50} color="black" /> */}
             </View>
          </View>
       </View>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 
    iconbutton: {
       padding: 30,
-      height: '73%',
+      height: '78%',
       alignItems: 'flex-end',
       flexDirection: 'column-reverse',
    },

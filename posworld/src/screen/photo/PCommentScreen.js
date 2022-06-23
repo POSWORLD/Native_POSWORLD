@@ -1,20 +1,29 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import HeaderScreen from "../HeaderScreen";
+
 import PCommentOneScreen from "./PCommentOneScreen";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
 import { TextInput } from "react-native-paper";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { createPcomment } from "../../store/pComments";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { createPcomment, selectPcomment } from "../../store/pComments";
 function PCommentScreen() {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
+  const pComments = useSelector((state) => state.pComments);
+  const commentList = useSelector((state) => state.pComments.comments);
+  console.log("commentList", commentList);
   const [message, setMessage] = useState({
     pid: "1",
     content: "",
     userid: "1",
   });
+
+  const commentPatch = () => {
+    dispatch(selectPcomment());
+  };
+
   const onChangeTextHandler = (name, value) => {
     setMessage({
       ...message,
@@ -23,9 +32,13 @@ function PCommentScreen() {
   };
 
   const onSubmit = () => {
-    alert("한다");
-    dispath(createPcomment(message));
+    dispatch(createPcomment(message));
   };
+
+  useEffect(() => {
+    console.log("select");
+    commentPatch();
+  }, []);
   return (
     <>
       <HeaderScreen name="댓글" />
@@ -36,7 +49,23 @@ function PCommentScreen() {
         </Text>
       </View>
       <View style={{ flex: 10, top: 0 }}>
-        <PCommentOneScreen />
+        {pComments.loading ? (
+          <ActivityIndicator></ActivityIndicator>
+        ) : (
+          <FlatList
+            data={Object.keys(commentList)}
+            renderItem={(key) =>
+              PCommentOneScreen(
+                commentList[key.index].content,
+                commentList[key.index].id,
+                commentList[key.index].name,
+                commentList[key.index].pid,
+                commentList[key.index].wdate
+              )
+            }
+            keyExtractor={(key) => key}
+          />
+        )}
       </View>
       <View style={styles.textInputDiv}>
         <TextInput

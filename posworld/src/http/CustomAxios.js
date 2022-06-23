@@ -7,7 +7,8 @@ const getToken = async () => {
   return await AsyncStorage.getItem("token");
 };
 export const customAxios = async (url, method, data) => {
-  const token = await getToken();
+  const token =
+    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IkF1dGhvcml0eS5ST0xFX1VTRVIiLCJleHAiOjE2NTYwNjA2NTZ9.72sEZRjLK68aneEomvk3E22lYhtoGkkMbglOINFL42FoulbUAuwY0MLReEIa3NxmlEaLdFHgGcGtlW_dT-t31Q"; //await getToken();
   const response = await axios({
     url,
     method,

@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-function PCommentOneScreen() {
+function PCommentOneScreen(content, id, name, pid, wdate) {
+  console.log("content", content);
   return (
     <View style={styles.wrapper}>
       <View style={{ flex: 0.4 }}>
@@ -12,9 +13,9 @@ function PCommentOneScreen() {
         ></Image>
       </View>
       <View style={StyleSheet.profileText}>
-        <Text style={{ flex: 1 }}> 포수빈</Text>
-        <Text style={{ flex: 1 }}> 맛있어?</Text>
-        <Text style={{ flex: 1, color: "#B0ACAC" }}>2022.07.21 12-32-42</Text>
+        <Text style={{ flex: 1 }}> {name}</Text>
+        <Text style={{ flex: 1 }}> {content}</Text>
+        <Text style={{ flex: 1, color: "#B0ACAC" }}>{wdate}</Text>
       </View>
       <AntDesign
         name="close"
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   },
   profileText: {
     margin: 10,
-    flex: 0.6,
+    flex: 0.8,
   },
 });
 export default PCommentOneScreen;

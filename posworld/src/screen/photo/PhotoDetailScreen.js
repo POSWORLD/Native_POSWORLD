@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import HeaderScreen from "../HeaderScreen";
-import PhotoCard from "./PhotoCard";
 import { selectPhoto, selectPhotoById } from "../../store/photos";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";

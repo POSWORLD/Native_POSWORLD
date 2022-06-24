@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import HomeHeaderScreen from "./home/HomeHeaderScreen";
-import ProfileUpdateScreen from "./ProfieUpdateScreen";
 
 function ProfileScreen({}) {
   const dispatch = useDispatch();

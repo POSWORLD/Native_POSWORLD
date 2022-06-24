@@ -8,8 +8,9 @@ import BoardScreen from "../BoardScreen";
 import HomeScreen from "../HomeScreen";
 import BottomNavigation from "./BottomNavigation";
 import LoginNavigate from "./LoginNavigete";
-import BoardAddScreen from '../BoardAddScreen';
-import PCommentScreen from '../pComment/PCommentScreen';
+import BoardAddScreen from "../BoardAddScreen";
+import PCommentScreen from "../pComment/PCommentScreen";
+import PhotoDetailScreen from "../photo/PhotoDetailScreen";
 
 function IndexNavigate() {
   const isLogin = useSelector((state) => state.user.isLogin);
@@ -20,6 +21,7 @@ function IndexNavigate() {
   };
   useEffect(() => {
     loginCheckFunc();
+    console.log("token", AsyncStorage.getItem("token"));
     console.log("isLogin", isLogin);
   }, [isLogin]);
 
@@ -27,10 +29,18 @@ function IndexNavigate() {
   return isLogin ? (
     <NavigationContainer>
       <Stack.Navigator>
-          <Stack.Screen name="home" component={BottomNavigation} options={{ headerShown: false }}></Stack.Screen>
-            <Stack.Screen name="PComment" component={PCommentScreen}></Stack.Screen>
-            <Stack.Screen name="BoardAdd" component={BoardAddScreen}></Stack.Screen>
-            <Stack.Screen name="Board" component={BoardScreen}></Stack.Screen>
+        <Stack.Screen
+          name="home"
+          component={BottomNavigation}
+          options={{ headerShown: false }}
+        ></Stack.Screen>
+        <Stack.Screen name="PComment" component={PCommentScreen}></Stack.Screen>
+        <Stack.Screen name="BoardAdd" component={BoardAddScreen}></Stack.Screen>
+        <Stack.Screen name="Board" component={BoardScreen}></Stack.Screen>
+        <Stack.Screen
+          name="PhotoDetail"
+          component={PhotoDetailScreen}
+        ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   ) : (

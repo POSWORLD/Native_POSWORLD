@@ -8,6 +8,8 @@ import Materiallcons from "react-native-vector-icons/MaterialIcons";
 import BoardScreen from "../BoardScreen";
 import ProfileScreen from "../ProfileScreen";
 import PhotoScreen from "../photo/PhotoScreen";
+import PCommentScreen from "../pComment/PCommentScreen";
+import PhotoDetailScreen from "../photo/PhotoDetailScreen";
 const Tab = createMaterialBottomTabNavigator();
 function BottomNavigation() {
   return (
@@ -42,7 +44,7 @@ function BottomNavigation() {
       />
       <Tab.Screen
         name="Wave"
-        component={HomeScreen}
+        component={PhotoDetailScreen}
         options={{
           tabBarLabel: "파도타기",
           tabBarIcon: ({ color }) => (

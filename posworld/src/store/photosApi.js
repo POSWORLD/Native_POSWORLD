@@ -3,7 +3,7 @@ import { customAxios } from "../http/CustomAxios";
 export const getPhotoApi = async (id) => {
   try {
     const response = await customAxios(`photo/${id}`, "get");
-
+    console.log(response);
     return response;
   } catch (error) {
     throw error;

@@ -6,11 +6,12 @@ import { ActivityIndicator, FAB } from "react-native-paper";
 import { selectPhoto } from "../../store/photos";
 import { useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
-import PhotoGridItem from "./photoGridItem";
+import PhotoGridItem from "./PhotoGridItem";
 function PhotoScreen() {
   const dispatch = useDispatch();
   const photos = useSelector((state) => state.photos);
   const photolist = useSelector((state) => state.photos.photo);
+  console.log(photolist);
   const isFocused = useIsFocused();
   const getPhotolist = () => {
     console.log("하냐");
@@ -49,7 +50,7 @@ function PhotoScreen() {
     </View>
   );
 }
-const renderItem = ({ img }) => <PhotoGridItem img={img} />;
+const renderItem = ({ img, id }) => <PhotoGridItem img={img} id={id} />;
 
 const styles = StyleSheet.create({
   fabButton: {

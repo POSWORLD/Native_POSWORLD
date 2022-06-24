@@ -7,6 +7,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Materiallcons from "react-native-vector-icons/MaterialIcons";
 import BoardScreen from "../BoardScreen";
 import PhotoScreen from "../photo/PhotoScreen";
+import PCommentScreen from "../pComment/PCommentScreen";
+import PhotoDetailScreen from "../photo/PhotoDetailScreen";
 const Tab = createMaterialBottomTabNavigator();
 function BottomNavigation() {
   return (
@@ -41,7 +43,7 @@ function BottomNavigation() {
       />
       <Tab.Screen
         name="Wave"
-        component={HomeScreen}
+        component={PhotoDetailScreen}
         options={{
           tabBarLabel: "파도타기",
           tabBarIcon: ({ color }) => (
@@ -61,7 +63,7 @@ function BottomNavigation() {
       />
       <Tab.Screen
         name="Setting"
-        component={HomeScreen}
+        component={PCommentScreen}
         options={{
           tabBarLabel: "더보기",
           tabBarIcon: ({ color }) => (

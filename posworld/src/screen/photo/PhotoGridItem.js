@@ -6,13 +6,15 @@ import {
 } from "react-native";
 import { IMG_PATH } from "../../http/CustomAxios";
 
-function PhotoGridItem({ img }) {
+function PhotoGridItem({ img, id }) {
   const dimensions = useWindowDimensions();
   const size = (dimensions.width - 3) / 3;
-  const onPress = () => {};
+  const onPress = (id) => {
+    console.log(id);
+  };
   return (
     <Pressable
-      onPress={onPress}
+      onPress={() => onPress(id)}
       style={({ pressed }) => [
         { opacity: pressed ? 0.6 : 1, width: size, height: size },
         styles.block,

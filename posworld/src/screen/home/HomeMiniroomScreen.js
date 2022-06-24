@@ -1,22 +1,25 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 import { IMG_PATH } from '../../http/CustomAxios';
 import { useSelector, useDispatch } from 'react-redux';
 import { select } from '../../store/homes';
 import { useEffect } from 'react';
+import { useIsFocused, useLinkTo } from '@react-navigation/native';
 function HomeMiniroomScreen() {
     const dispatch = useDispatch();
+    const linkto = useLinkTo();
+    const isFocused = useIsFocused();
     const home = useSelector((state) => state.homes.home);
     useEffect(() => {
         dispatch(select());
-    }, []);
+    }, [isFocused]);
     return (
         <>
             <View style={styles.block}>
                 <Text style={styles.text}>MINI ROOM</Text>
-                <Image source={{ uri: `${IMG_PATH}${home.photo}` }} style={{ width: 390, height: 250 }}></Image>
+                <TouchableOpacity onPress={() => linkto('/HomeUpdatePhoto')}>
+                    <Image source={{ uri: `${IMG_PATH}${home.photo}` }} style={{ width: 390, height: 250 }}></Image>
+                </TouchableOpacity>
             </View>
         </>
     );

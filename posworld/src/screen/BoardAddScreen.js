@@ -18,6 +18,7 @@ const BoardAddScreen = ({ navigation }) => {
    const onChangeTextHandler = (name, value) => {
       setForm({ ...form, [name]: value });
    };
+   console.log(form);
    const onsubmit = () => {
       alert('등록');
       dispatch(createboard(form));

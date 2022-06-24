@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import {
   Image,
   Pressable,
@@ -8,13 +9,11 @@ import { IMG_PATH } from "../../http/CustomAxios";
 
 function PhotoGridItem({ img, id }) {
   const dimensions = useWindowDimensions();
+  const navigation = useNavigation();
   const size = (dimensions.width - 3) / 3;
-  const onPress = (id) => {
-    console.log(id);
-  };
   return (
     <Pressable
-      onPress={() => onPress(id)}
+      onPress={() => navigation.navigate("PhotoDetail")}
       style={({ pressed }) => [
         { opacity: pressed ? 0.6 : 1, width: size, height: size },
         styles.block,

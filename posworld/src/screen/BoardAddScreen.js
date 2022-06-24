@@ -15,29 +15,29 @@ import { useIsFocused } from "@react-navigation/native";
 const BoardAddScreen = ({ navigation }) => {
   const { top } = useSafeAreaInsets();
 
-  const [form, setForm] = useState({
-    content: "",
-    userId: 1,
-    homeId: 1,
-  });
-  const dispatch = useDispatch();
-  const onChangeTextHandler = (name, value) => {
-    setForm({ ...form, [name]: value });
-  };
-  console.log(form);
-  const onsubmit = () => {
-    alert("등록");
-    dispatch(createboard(form));
-    navigation.goBack();
-  };
-  return (
-    <View>
-      <View style={[styles.statusBarPlaceholder, { height: top }]} />
-      <View style={styles.block}>
-        <View style={styles.container}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.item1}>취소</Text>
-          </TouchableOpacity>
+   const [form, setForm] = useState({
+      content: '',
+      userId: 1,
+      homeId: 0,
+   });
+   const dispatch = useDispatch();
+   const onChangeTextHandler = (name, value) => {
+      setForm({ ...form, [name]: value });
+   };
+   const onsubmit = () => {
+      alert('등록');
+      dispatch(createboard(form));
+      navigation.goBack();
+   };
+   return (
+      <View>
+         <View style={[styles.statusBarPlaceholder, { height: top }]} />
+         <View style={styles.block}>
+            <View style={styles.container}>
+               <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={styles.item1}>취소</Text>
+               </TouchableOpacity>
+
 
           <Text style={styles.nameText}>방명록 남기기</Text>
           <TouchableOpacity onPress={() => onsubmit()}>

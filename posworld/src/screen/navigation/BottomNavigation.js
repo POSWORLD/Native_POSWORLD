@@ -7,6 +7,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Materiallcons from "react-native-vector-icons/MaterialIcons";
 import BoardScreen from "../BoardScreen";
 import ProfileScreen from "../ProfileScreen";
+import PhotoScreen from "../photo/PhotoScreen";
 const Tab = createMaterialBottomTabNavigator();
 function BottomNavigation() {
   return (
@@ -31,7 +32,7 @@ function BottomNavigation() {
       />
       <Tab.Screen
         name="Photo"
-        component={HomeScreen}
+        component={PhotoScreen}
         options={{
           tabBarLabel: "사진첩",
           tabBarIcon: ({ color }) => (

@@ -10,13 +10,14 @@ const UPDATE_HOME_CONTENT_FAIL = 'HOME/UPDATE_CONTENT_FAIL';
 const UPDATE_HOME_PHOTO = 'HOME/UPDATE_PHOTO';
 const UPDATE_HOME_PHOTO_SUCCESS = 'HOME/UPDATE_PHOTO_SUCCESS';
 const UPDATE_HOME_PHOTO_FAIL = 'HOME/UPDATE_PHOTO_FAIL';
-export const select = () => ({ type: READ_HOME });
+export const select = (id) => ({ type: READ_HOME, id });
 export const updateContent = (params) => ({ type: UPDATE_HOME_CONTENT, params });
 export const updatePhoto = (params) => ({ type: UPDATE_HOME_PHOTO, params });
 
 const initialHome = {
     id: 0,
     home: {},
+    homeId: {},
     loading: false,
     success: false,
     enableAccess: false,
@@ -25,7 +26,7 @@ const initialHome = {
 const getHome = function* (action) {
     try {
         console.log('응답하라 오바');
-        const result = yield call(getHomeApi);
+        const result = yield call(getHomeApi, action.id);
         yield put({ type: READ_HOME_SUCCESS, data: result });
     } catch (err) {
         yield put({ type: READ_HOME_FAIL, data: err });
@@ -90,6 +91,7 @@ const homes = (state = initialHome, action) =>
             case READ_HOME_SUCCESS:
                 console.log(action);
                 draft.home = action.data;
+                draft.homeId = action.data.id;
                 draft.loading = false;
                 draft.success = true;
                 break;

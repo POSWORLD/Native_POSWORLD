@@ -1,8 +1,9 @@
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import BoardAddScreen from '../BoardAddScreen';
 import BoardScreen from '../BoardScreen';
-import PCommentScreen from '../photo/PCommentScreen';
+import PCommentScreen from '../pComment/PCommentScreen';
 import BottomNavigation from './BottomNavigation';
 function IndexNavigate() {
    const Stack = createStackNavigator();
@@ -16,5 +17,6 @@ function IndexNavigate() {
          </Stack.Navigator>
       </NavigationContainer>
    );
+
 }
 export default IndexNavigate;

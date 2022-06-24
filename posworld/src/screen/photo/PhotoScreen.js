@@ -1,13 +1,41 @@
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import HeaderScreen from "../HeaderScreen";
-import { Dimensions } from "react-native";
-import { FAB } from "react-native-paper";
+import { IMG_PATH } from "../../http/CustomAxios";
+import { ActivityIndicator, FAB } from "react-native-paper";
+import { selectPhoto } from "../../store/photos";
+import { useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
+import PhotoGridItem from "./photoGridItem";
 function PhotoScreen() {
+  const dispatch = useDispatch();
+  const photos = useSelector((state) => state.photos);
+  const photolist = useSelector((state) => state.photos.photo);
+  const isFocused = useIsFocused();
+  const getPhotolist = () => {
+    console.log("하냐");
+    dispatch(selectPhoto());
+  };
+
+  useEffect(() => {
+    console.log("시작");
+    getPhotolist();
+  }, [isFocused]);
+
   return (
     <View style={{ flex: 1 }}>
       <HeaderScreen style={{ flex: 1 }} name="사진첩" />
       <View style={{ flex: 5 }}>
-        <FlatList renderItem={(item) => renderItem(item)}></FlatList>
+        {photos.loading ? (
+          <ActivityIndicator></ActivityIndicator>
+        ) : (
+          <FlatList
+            data={Object.keys(photolist)}
+            renderItem={(key) => renderItem(photolist[key.index])}
+            numColumns={3}
+            keyExtractor={(key) => key}
+          />
+        )}
       </View>
       <View style={{ flex: 1 }}>
         <FAB
@@ -21,28 +49,8 @@ function PhotoScreen() {
     </View>
   );
 }
+const renderItem = ({ img }) => <PhotoGridItem img={img} />;
 
-const renderItem = ({ item }) => {
-  return (
-    //todo
-
-    <View style={{ margin: 10, borderColor: "gray", borderWidth: 1 }}>
-      <Link to={{ screen: "PostDetail", params: item }}>
-        <Text>{item.userName}</Text>
-        <Text>{`${IMG_PATH}${item.img}`}</Text>
-        <Image
-          source={{ uri: `${IMG_PATH}${item.img}` }}
-          style={{ width: 100, height: 100 }}
-        ></Image>
-        <View>
-          <Text>{item.content}</Text>
-        </View>
-      </Link>
-    </View>
-  );
-};
-
-const windowHeight = Dimensions.get("window").height;
 const styles = StyleSheet.create({
   fabButton: {
     position: "absolute",

@@ -64,6 +64,18 @@ const pComments = (state = initialPcomment, action) =>
         draft.success = false;
         draft.loading = false;
         break;
+      case DELETE_PCOMMENT:
+        draft.loading = true;
+        draft.success = false;
+        break;
+      case DELETE_PCOMMENT_SUCCESS:
+        draft.loading = false;
+        draft.success = true;
+        break;
+      case DELETE_PCOMMENT_FAIL:
+        draft.loading = false;
+        draft.success = false;
+        break;
       default:
         return state;
     }

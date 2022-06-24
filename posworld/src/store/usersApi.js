@@ -21,7 +21,7 @@ export const loginValue = function* (action) {
 export const loginApi = (params) => {
   console.log("loginApi들어옴");
   const member = { userid: params.params.userid, pw: params.params.pw };
-  return axios.post("http://192.168.0.38:8001/auth/login", member);
+  return axios.post("http://192.168.0.82:8001/auth/login", member);
 };
 
 export const loginCheckValue = function* (action) {
@@ -36,7 +36,7 @@ export const loginCheckValue = function* (action) {
 
 export const loginCheckApi = (action) => {
   console.log("loginCheckApi들어옴");
-  return axios.get("http://192.168.0.38:8001/member/me", {
+  return axios.get("http://192.168.0.82:8001/member/me", {
     headers: {
       Authorization: `Bearer ${action.params}`,
     },

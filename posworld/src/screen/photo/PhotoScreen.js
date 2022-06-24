@@ -13,7 +13,6 @@ function PhotoScreen() {
 
   const isFocused = useIsFocused();
   const getPhotolist = () => {
-    console.log("하냐");
     dispatch(selectPhoto());
   };
 

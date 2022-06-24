@@ -5,15 +5,22 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from "react-native";
+import { useDispatch } from "react-redux";
 import { IMG_PATH } from "../../http/CustomAxios";
+import { setPid } from "../../store/photos";
 
 function PhotoGridItem({ img, id }) {
+  const dispatch = useDispatch();
   const dimensions = useWindowDimensions();
   const navigation = useNavigation();
   const size = (dimensions.width - 3) / 3;
+  const afterPress = () => {
+    dispatch(setPid(id));
+    navigation.navigate("PhotoDetail");
+  };
   return (
     <Pressable
-      onPress={() => navigation.navigate("PhotoDetail")}
+      onPress={() => afterPress()}
       style={({ pressed }) => [
         { opacity: pressed ? 0.6 : 1, width: size, height: size },
         styles.block,

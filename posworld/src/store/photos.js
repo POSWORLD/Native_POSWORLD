@@ -1,11 +1,14 @@
 import produce from 'immer';
-import { postPhotoApi } from './photosApi';
+import { deletePhotoApi, postPhotoApi } from './photosApi';
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { fileAxios } from '../http/CustomAxios';
 
 const INSERT_PHOTO = 'INSERT_PHOTO';
 const INSERT_PHOTO_SUCCESS = 'INSERT_PHOTO_SUCCESS';
 const INSERT_PHOTO_FAIL = 'INSERT_PHOTO_FAIL';
+const DELETE_PHOTO = 'DELETE_PHOTO';
+const DELETE_PHOTO_SUCCESS = 'DELETE_PHOTO_SUCCESS';
+const DELETE_PHOTO_FAIL = 'DELETE_PHOTO_FAIL';
 
 const initialPhoto = {
     photos: {},
@@ -15,9 +18,11 @@ const initialPhoto = {
 };
 
 export const insertPhoto = (params) => ({ type: INSERT_PHOTO, params });
+export const delPhoto = (id) => ({ type: DELETE_PHOTO, id });
 
 export function* PhotoSaga() {
     yield takeLatest(INSERT_PHOTO, postPhoto);
+    yield takeLatest(DELETE_PHOTO, deletePhoto);
 }
 
 const postPhoto = function* (action) {
@@ -26,6 +31,15 @@ const postPhoto = function* (action) {
         yield put({ type: INSERT_PHOTO_SUCCESS, data: result });
     } catch (error) {
         yield put({ type: INSERT_PHOTO_FAIL, data: error });
+    }
+};
+
+const deletePhoto = function* (id) {
+    try {
+        const result = yield call(deletePhotoApi, id);
+        yield put({ type: DELETE_PHOTO_SUCCESS, data: result });
+    } catch (error) {
+        yield put({ type: DELETE_PHOTO_FAIL, data: error });
     }
 };
 

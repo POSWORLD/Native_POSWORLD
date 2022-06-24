@@ -1,9 +1,10 @@
+import { useLinkTo } from '@react-navigation/native';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-function HomeBodyScreen({ name }) {
-    const { top } = useSafeAreaInsets();
+function HomeBodyScreen() {
+    const linkto = useLinkTo();
     return (
         <>
             <View style={styles.block}>
@@ -20,9 +21,7 @@ function HomeBodyScreen({ name }) {
                     </View>
                 </View>
                 <View style={{ flex: 1 }}>
-                    <Text
-                        style={styles.text}
-                    >{` today is...                                                      일촌 17 즐겨찾기 0`}</Text>
+                    <Text style={styles.text}>{` today is...                                                   일촌 17 즐겨찾기 0`}</Text>
                 </View>
             </View>
         </>

@@ -1,4 +1,6 @@
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   StyleSheet,
   Text,
@@ -8,11 +10,27 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
+import { login, loginCheck } from "../store/user";
 
 const LoginScreen = () => {
+  const dispath = useDispatch();
+  const [user, setUser] = useState({
+    userid: "",
+    pw: "",
+  });
+  const onChangeTextHandler = (name, value) => {
+    setUser({
+      ...user,
+      [name]: value,
+    });
+  };
+  const onSubmit = async () => {
+    await dispath(login(user));
+  };
+
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("./assets/logo.png")} />
+      <Image style={styles.image} source={require("./img/logo.png")} />
 
       <StatusBar style="auto" />
       <View style={styles.inputView}>
@@ -20,7 +38,7 @@ const LoginScreen = () => {
           style={styles.TextInput}
           placeholder="아이디"
           placeholderTextColor="#808080"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(value) => onChangeTextHandler("userid", value)}
         />
       </View>
 
@@ -30,17 +48,19 @@ const LoginScreen = () => {
           placeholder="비밀번호"
           placeholderTextColor="#808080"
           secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={(value) => onChangeTextHandler("pw", value)}
         />
       </View>
 
       <View style={styles.buttonView}>
         <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText}>로그인</Text>
+          <Text style={styles.loginText} onPress={onSubmit}>
+            로그인
+          </Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity>
-        <Text style={styles.forgot_button}>회원가입.</Text>
+        <Text style={styles.forgot_button}>회원가입</Text>
       </TouchableOpacity>
     </View>
   );

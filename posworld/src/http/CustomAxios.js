@@ -7,8 +7,7 @@ const getToken = async () => {
     return await AsyncStorage.getItem('token');
 };
 export const customAxios = async (url, method, data) => {
-    const token =
-        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IkF1dGhvcml0eS5ST0xFX1VTRVIiLCJleHAiOjE2NTYxMjQ5Mzh9.vVPDDcRqy7LWeKcvpI6IOpsO1Tnoqm9hAKOKCJOC7K0IdecMY9VjgZJzlya4ofht4gRT0UsXM5OYPps50EyTOA'; //await getToken();
+    const token = await getToken();
     const response = await axios({
         url,
         method,
@@ -21,8 +20,7 @@ export const customAxios = async (url, method, data) => {
 };
 
 export const fileAxios = async (url, method, data) => {
-    const token =
-        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IkF1dGhvcml0eS5ST0xFX1VTRVIiLCJleHAiOjE2NTYxMjQ5Mzh9.vVPDDcRqy7LWeKcvpI6IOpsO1Tnoqm9hAKOKCJOC7K0IdecMY9VjgZJzlya4ofht4gRT0UsXM5OYPps50EyTOA';
+    const token = await getToken();
     const response = await axios({
         url,
         method,

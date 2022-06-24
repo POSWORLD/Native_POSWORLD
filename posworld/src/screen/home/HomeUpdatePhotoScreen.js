@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { View, Button, Text, Image } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Button, Text, Image, TouchableOpacity } from 'react-native';
+
 import { useDispatch } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 import { updatePhoto } from '../../store/homes';
@@ -11,7 +11,7 @@ const HomeUpdatePhoto = ({ navigation }) => {
         photo: '',
         file: '',
     });
-    const [previewImg, setPreviewImg] = useState('');
+
     let openImagePickerASync = async () => {
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -20,7 +20,9 @@ const HomeUpdatePhoto = ({ navigation }) => {
             return;
         }
 
-        let pickerResult = await ImagePicker.launchImageLibraryAsync({ base64: true });
+        let pickerResult = await ImagePicker.launchImageLibraryAsync({
+            base64: true,
+        });
         let filePath = '';
         const splitUri = pickerResult.uri.split('/');
         const photo = `${splitUri[splitUri.length - 1]}`;
@@ -30,6 +32,7 @@ const HomeUpdatePhoto = ({ navigation }) => {
         let uploadFile = new FormData();
         uploadFile.append('file', file);
         if (file) {
+            console.log('업로드 가능?');
             filePath = await fileAxios('/upload', 'post', uploadFile);
         }
 
@@ -38,7 +41,6 @@ const HomeUpdatePhoto = ({ navigation }) => {
             photo: filePath ? filePath : photo,
             file,
         });
-        setPreviewImg(pickerResult.uri);
     };
     const onSubmit = () => {
         dispatch(updatePhoto(home));
@@ -49,7 +51,7 @@ const HomeUpdatePhoto = ({ navigation }) => {
             <TouchableOpacity onPress={openImagePickerASync}>
                 <Text>사진을 수정하세요</Text>
             </TouchableOpacity>
-            {previewImg ? <Image source={{ uri: previewImg }} style={{ height: 200, width: 200 }}></Image> : null}
+            <Image source={{ uri: home.file.uri }} style={{ height: 200, width: 200 }}></Image>
             <Button onPress={onSubmit} title="수정"></Button>
         </View>
     );

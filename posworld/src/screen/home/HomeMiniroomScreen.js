@@ -11,6 +11,7 @@ function HomeMiniroomScreen() {
     const isFocused = useIsFocused();
     const home = useSelector((state) => state.homes.home);
     useEffect(() => {
+        console.log('시작2');
         dispatch(select());
     }, [isFocused]);
     return (

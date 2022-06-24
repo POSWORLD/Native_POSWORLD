@@ -22,7 +22,6 @@ function PhotoDetailScreen() {
   const photo = useSelector((state) => state.photos.photoDetail);
   console.log("photolist", photo);
   const photoget = () => {
-    console.log("가는가?");
     dispatch(selectPhotoById(pid));
   };
   useEffect(() => {

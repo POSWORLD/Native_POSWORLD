@@ -1,12 +1,14 @@
-import { ActivityIndicator, Button, FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import HeaderScreen from './HeaderScreen';
 
 import { AntDesign } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { selectboard } from '../store/boards';
+import { deleteboard, selectboard } from '../store/boards';
 import { useIsFocused } from '@react-navigation/native';
+import BoardListScreen from './BoardListScreen';
+const myId = 1;
 
 const BoardScreen = ({ navigation }) => {
    const [boards, setBoards] = useState({
@@ -20,10 +22,15 @@ const BoardScreen = ({ navigation }) => {
       dispatch(selectboard(boards.homeId));
    };
    const boardlist = useSelector(state => state.boards);
-
+   //console.log('bod', boardlist);
    useEffect(() => {
       getBoard();
    }, [isFocused]);
+
+   const onDel = () => {
+      alert('등록');
+      dispatch(deleteboard(num));
+   };
    return boardlist.loading ? (
       <View>
          <HeaderScreen name="방명록"></HeaderScreen>
@@ -36,7 +43,7 @@ const BoardScreen = ({ navigation }) => {
             <View style={styles.boardlist}>
                <FlatList
                   data={Object.keys(boardlist.board)} //
-                  renderItem={key => renderItem(boardlist.board[key.index])}
+                  renderItem={key => <BoardListScreen boarditem={boardlist.board[key.index]} boardlist={boardlist} />}
                   keyExtractor={key => key}
                />
             </View>
@@ -48,31 +55,8 @@ const BoardScreen = ({ navigation }) => {
       </View>
    );
 };
-export default BoardScreen;
 
-const renderItem = ({ content, wdate, friendimg, friendname, friendid }) => {
-   return (
-      <>
-         <View style={styles.mainCardView}>
-            <View>
-               <Text>아이디: {friendid}</Text>
-            </View>
-            <View>
-               <Text>닉네임:{friendname} </Text>
-            </View>
-            <View style={styles.subCardView}>
-               <Text>img:{friendimg} </Text>
-            </View>
-            <View>
-               <Text>작성자:{wdate}</Text>
-            </View>
-            <View>
-               <Text>내용:{content}</Text>
-            </View>
-         </View>
-      </>
-   );
-};
+export default BoardScreen;
 
 const styles = StyleSheet.create({
    container: {

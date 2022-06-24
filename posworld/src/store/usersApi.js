@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { call, put } from "redux-saga/effects";
+import { customAxios, fileAxios } from "../http/CustomAxios";
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -9,38 +10,58 @@ import {
 } from "./actionType";
 
 export const loginValue = function* (action) {
-  console.log("loginValue들어옴");
+  // console.log("loginValue들어옴");
   try {
     const result = yield call(loginApi, action);
-    yield put({ type: LOGIN_SUCCESS, data: result.data }); //put : 특성 액션을 디스패치
+    yield put({ type: LOGIN_SUCCESS, data: result }); //put : 특성 액션을 디스패치
   } catch (err) {
     yield put({ type: LOGIN_FAIL, data: err });
   }
 };
 
-export const loginApi = (params) => {
-  console.log("loginApi들어옴");
+const loginApi = (params) => {
+  // console.log("loginApi들어옴");
   const member = { userid: params.params.userid, pw: params.params.pw };
-  return axios.post("http://192.168.0.38:8001/auth/login", member);
+  return customAxios("/auth/login", "post", member);
 };
 
 export const loginCheckValue = function* (action) {
-  console.log("loginCheckValue들어옴");
+  // console.log("loginCheckValue들어옴");
   try {
     const result = yield call(loginCheckApi, action);
-    yield put({ type: LOGIN_CHECK_SUCCESS, data: result.data });
+    yield put({ type: LOGIN_CHECK_SUCCESS, data: result });
   } catch (err) {
     yield put({ type: LOGIN_CHECK_FAIL, data: err });
   }
 };
 
-export const loginCheckApi = (action) => {
-  console.log("loginCheckApi들어옴");
-  return axios.get("http://192.168.0.38:8001/member/me", {
-    headers: {
-      Authorization: `Bearer ${action.params}`,
-    },
-  });
+const loginCheckApi = (action) => {
+  // console.log("loginCheckApi들어옴");
+  return customAxios("/member/me", "get");
+};
+
+export const updateUserValue = function* (action) {
+  console.log("updateUserValue들어옴");
+  console.log(action.params);
+  try {
+    let filePath = "";
+    const { userid, img, file, name } = action.params;
+    let uploadFile = new FormData();
+    uploadFile.append("file", file);
+    if (file) {
+      filePath = fileAxios("/upload", "post", uploadFile);
+    }
+    const user = {
+      userId: Number(myId),
+      name,
+      prophoto: filePath ? filePath : img,
+    };
+    const result = yield call(updateUserApi, action);
+  } catch {}
+};
+
+const updateUserApi = (action) => {
+  // console.log("updateUserApi들어옴");
 };
 
 // export const idCheckApi = async (user) => {

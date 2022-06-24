@@ -7,8 +7,7 @@ import { insertPhoto } from '../../store/photos';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { fileAxios } from '../../http/CustomAxios';
 
-const PhotoAddScreen = (/* { navigation } */) => {
-    /* state = { img: null }; */
+const PhotoAddScreen = () => {
     const dispatch = useDispatch();
     const [photo, setPhoto] = useState({
         title: '',
@@ -16,7 +15,7 @@ const PhotoAddScreen = (/* { navigation } */) => {
         content: '',
         file: '',
     });
-    /*  const [previewImg, setPreviewImg] = useState(''); */
+
     let openImagePickerAsync = async () => {
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -32,37 +31,37 @@ const PhotoAddScreen = (/* { navigation } */) => {
             quality: 1,
         });
 
-        // let filePath = '';
+        let filePath = '';
         const splitUri = pickerResult.uri.split('/');
         const img = `${splitUri[splitUri.length - 1]}`;
         const splitUriType = pickerResult.uri.split('.');
         const type = `image/${splitUriType[splitUriType.length - 1]}`;
         const file = { uri: pickerResult.uri.replace('file:/data', 'file:///data'), name: img, type };
-        // filePath = await fileAxios('/upload', 'post', file);
+        let uploadFile = new FormData();
+        uploadFile.append('file', file);
+        if (file) {
+            filePath = await fileAxios('/upload', 'post', uploadFile);
+        }
 
         setPhoto({
             ...photo,
-            img,
+            img: filePath ? filePath : img,
             file,
         });
-        /* setPreviewImg(pickerResult.uri); */
     };
 
     const onSubmit = () => {
         dispatch(insertPhoto(photo));
-        //navigation.goBack();
     };
 
     return (
         <>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, marginBottom: 10 }}>
                 <HeaderScreen name={'사진 등록'}></HeaderScreen>
                 <TouchableOpacity onPress={openImagePickerAsync}>
-                    <Text style={styles.text}>사진 선택</Text>
+                    <Text style={styles.btn}>사진 선택</Text>
                 </TouchableOpacity>
                 <Image source={{ uri: photo.file.uri }} style={{ height: 200, width: 200, marginLeft: 10 }}></Image>
-                {/* {previewImg ? <Image source={{ uri: previewImg }} style={{ height: 200, width: 200 }}></Image> : null} */}
-                {/* {image == null ? null : <Image source={{ uri: 'C:UsershjuheOneDrivePicturesimage1.jpg' }} />} */}
             </View>
             <View style={{ flex: 1.3 }}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

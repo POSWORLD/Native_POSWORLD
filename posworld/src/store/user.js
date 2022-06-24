@@ -6,6 +6,7 @@ import {
   loginValue,
   updateUserValue,
   logoutValue,
+  signUpValue,
 } from "./usersApi";
 import {
   INIT,
@@ -18,6 +19,9 @@ import {
   UPDATE_USER_FAIL,
   LOGOUT,
   LOGOUT_SUCCESS,
+  SIGNUP,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAIL,
 } from "./actionType";
 
 //액션 함수
@@ -26,6 +30,7 @@ export const login = (params) => ({ type: LOGIN, params });
 export const loginCheck = (params) => ({ type: LOGIN_CHECK, params });
 export const updateUser = (params) => ({ type: UPDATE_USER, params });
 export const logout = () => ({ type: LOGOUT });
+export const signUp = (params) => ({ type: SIGNUP, params });
 
 //사가함수
 export function* UserSaga() {
@@ -33,6 +38,7 @@ export function* UserSaga() {
   yield takeLatest(LOGIN_CHECK, loginCheckValue);
   yield takeLatest(UPDATE_USER, updateUserValue);
   yield takeLatest(LOGOUT, logoutValue);
+  yield takeLatest(SIGNUP, signUpValue);
 }
 
 //초기상태
@@ -79,6 +85,12 @@ const user = (state = initialUser, action) =>
         AsyncStorage.clear();
         draft.isLogin = false;
         draft.me = {};
+        break;
+      case SIGNUP_SUCCESS:
+        alert("회원가입이 완료되었습니다");
+        break;
+      case SIGNUP_FAIL:
+        alert("회원가입에 실패했습니다.");
         break;
       default:
         return state;

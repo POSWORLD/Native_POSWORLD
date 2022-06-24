@@ -9,15 +9,18 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { login } from "../store/user";
+import { signUp } from "../store/user";
+import { RadioButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
   const dispath = useDispatch();
   const navigation = useNavigation();
   const [user, setUser] = useState({
     userid: "",
     pw: "",
+    name: "",
+    gender: "m",
   });
   const onChangeTextHandler = (name, value) => {
     setUser({
@@ -26,7 +29,8 @@ const LoginScreen = () => {
     });
   };
   const onSubmit = async () => {
-    await dispath(login(user));
+    await dispath(signUp(user));
+    await navigation.navigate("login");
   };
 
   return (
@@ -53,26 +57,50 @@ const LoginScreen = () => {
         />
       </View>
 
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="닉네임"
+          placeholderTextColor="#808080"
+          onChangeText={(value) => onChangeTextHandler("name", value)}
+        />
+      </View>
+
+      <View style={styles.radio}>
+        <Text>남</Text>
+        <RadioButton
+          value="m"
+          status={user.gender === "m" ? "checked" : "unchecked"}
+          onPress={() => onChangeTextHandler("gender", "m")}
+        />
+        <Text>{`      여`}</Text>
+        <RadioButton
+          value="f"
+          status={user.gender === "f" ? "checked" : "unchecked"}
+          onPress={() => onChangeTextHandler("gender", "f")}
+        />
+      </View>
+
       <View style={styles.buttonView}>
         <TouchableOpacity style={styles.loginBtn} onPress={onSubmit}>
-          <Text style={styles.loginText}>로그인</Text>
+          <Text style={styles.loginText}>회원가입</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity>
         <Text
           style={styles.forgot_button}
           onPress={() => {
-            navigation.navigate("signUp");
+            navigation.navigate("login");
           }}
         >
-          회원가입
+          로그인
         </Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default LoginScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -81,7 +109,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
+  radio: {
+    flexDirection: "row",
+  },
   image: {
     marginBottom: 40,
   },

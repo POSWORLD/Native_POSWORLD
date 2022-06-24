@@ -10,6 +10,7 @@ import ProfileScreen from "../ProfileScreen";
 import PhotoScreen from "../photo/PhotoScreen";
 import PCommentScreen from "../pComment/PCommentScreen";
 import PhotoDetailScreen from "../photo/PhotoDetailScreen";
+import WaveScreen from "../WaveScreen";
 const Tab = createMaterialBottomTabNavigator();
 function BottomNavigation() {
   return (
@@ -44,7 +45,7 @@ function BottomNavigation() {
       />
       <Tab.Screen
         name="Wave"
-        component={PhotoDetailScreen}
+        component={WaveScreen}
         options={{
           tabBarLabel: "파도타기",
           tabBarIcon: ({ color }) => (

@@ -10,6 +10,8 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAIL,
   LOGOUT_SUCCESS,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAIL,
 } from "./actionType";
 
 export const loginValue = function* (action) {
@@ -28,6 +30,23 @@ const loginApi = (params) => {
   return customAxios("/auth/login", "post", member);
 };
 
+export const signUpValue = function* (action) {
+  try {
+    const result = yield call(signUpApi, action);
+    console.log(">>>>>>>>>>>>>>>>>>>>", result);
+    yield put({ type: SIGNUP_SUCCESS, data: result });
+  } catch (err) {
+    yield put({ type: SIGNUP_FAIL, data: err });
+  }
+};
+
+const signUpApi = (action) => {
+  // console.log("signUpApi들어옴");
+  const member = action.params;
+  console.log(member);
+  return customAxios("/auth/signup", "post", member);
+};
+
 export const loginCheckValue = function* (action) {
   // console.log("loginCheckValue들어옴");
   try {
@@ -44,8 +63,7 @@ const loginCheckApi = (action) => {
 };
 
 export const updateUserValue = function* (action) {
-  console.log("updateUserValue들어옴");
-  console.log(">>>>>>>>>>>>>>>>>", action.params);
+  // console.log("updateUserValue들어옴");
   try {
     let filePath = "";
     const { userid, prophoto, file, name } = action.params;
@@ -67,7 +85,7 @@ export const updateUserValue = function* (action) {
 };
 
 const updateUserApi = (action) => {
-  console.log("updateUserApi들어옴");
+  // console.log("updateUserApi들어옴");
   return customAxios("/member/name", "post", action);
 };
 

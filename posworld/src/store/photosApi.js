@@ -1,38 +1,38 @@
-import { customAxios } from "../http/CustomAxios";
+import { customAxios } from '../http/CustomAxios';
 
 export const getPhotoApi = async (id) => {
-  try {
-    const response = await customAxios(`photo/${id}`, "get");
+    try {
+        const response = await customAxios(`photo/${id}`, 'get');
 
-    return response;
-  } catch (error) {
-    throw error;
-  }
+        return response;
+    } catch (error) {
+        throw error;
+    }
 };
 
 export const getPhotoByIdApi = async (pid) => {
-  try {
-    const response = await customAxios(`photo/detail/${pid.pid}`, "get");
-    return response;
-  } catch (error) {
-    throw error;
-  }
+    try {
+        const response = await customAxios(`photo/detail/${pid.pid}`, 'get');
+        return response;
+    } catch (error) {
+        throw error;
+    }
 };
 
 export const postPhotoApi = async (photo) => {
-  try {
-    const response = await customAxios("photo/2", "post", photo);
-    return response;
-  } catch (error) {
-    throw error;
-  }
+    try {
+        const response = await customAxios('photo/2', 'post', photo);
+        return response;
+    } catch (error) {
+        throw error;
+    }
 };
 
-export const deletePhotoApi = async (id) => {
-  try {
-    const response = await customAxios(`photo/${Number(id)}/2`, "get");
-    return response;
-  } catch (error) {
-    throw error;
-  }
+export const deletePhotoApi = async (pid) => {
+    try {
+        const response = await customAxios(`photo/${pid.pid}/2`, 'delete');
+        return response;
+    } catch (error) {
+        throw error;
+    }
 };

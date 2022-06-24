@@ -22,7 +22,6 @@ function PhotoDetailScreen() {
   const navigation = useNavigation();
   const pid = useSelector((state) => state.photos.pid);
   const photo = useSelector((state) => state.photos.photoDetail);
-  console.log("photolist", photo);
   const photoget = () => {
     dispatch(selectPhotoById(pid));
   };

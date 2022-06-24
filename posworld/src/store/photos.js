@@ -53,9 +53,7 @@ export function* photoSaga() {
 
 const getPhotoById = function* (pid) {
   try {
-    console.log("pidsss", pid);
     const result = yield call(getPhotoByIdApi, pid);
-    console.log("result", result);
     yield put({ type: SELECT_PHOTO_BY_ID_SUCCESS, data: result });
   } catch (err) {
     yield put({ type: SELECT_PHOTO_BY_ID_FAIL, data: err });
@@ -72,7 +70,6 @@ const createPid = function* (action) {
 
 export const getPhoto = function* (action) {
   try {
-    console.log("action", action.id);
     const result = yield call(getPhotoApi, action.id);
     yield put({ type: SELECT_PHOTO_SUCCESS, data: result });
   } catch (err) {
@@ -106,13 +103,11 @@ const photos = (state = initialPhoto, action) =>
         draft.loading = true;
         break;
       case SELECT_PHOTO_SUCCESS:
-        console.log("성공");
         draft.success = true;
         draft.loading = false;
         draft.photo = action.data;
         break;
       case SELECT_PHOTO_FAIL:
-        console.log("fail");
         draft.success = false;
         draft.loading = false;
         break;
@@ -123,7 +118,6 @@ const photos = (state = initialPhoto, action) =>
       case SELECT_PHOTO_BY_ID_SUCCESS:
         draft.success = true;
         draft.loading = false;
-        console.log("action", action);
         draft.photoDetail = action.data;
         break;
       case SELECT_PHOTO_BY_ID_FAIL:
@@ -135,7 +129,6 @@ const photos = (state = initialPhoto, action) =>
         break;
       case SET_PID_SUCCESS:
         draft.loading = false;
-        console.log(action);
         draft.pid = action.data;
         break;
       case INSERT_PHOTO:

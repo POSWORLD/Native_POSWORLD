@@ -1,9 +1,14 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { useDispatch } from "react-redux";
+import { deletePcomment } from "../../store/pComments";
 import changeTime from "../photo/changeTime";
 function PCommentOneScreen({ commentItem, commentList }) {
-  const onDelete = (id) => {};
+  const dispatch = useDispatch();
+  const onRemove = () => {
+    dispatch(deletePcomment(commentItem.id, 1, commentList));
+  };
   return (
     <View style={styles.wrapper}>
       <View style={{ flex: 0.4, marginRight: 10 }}>
@@ -22,7 +27,7 @@ function PCommentOneScreen({ commentItem, commentList }) {
         </Text>
       </View>
       <View style={{ flex: 0.2, textAlign: "end" }}>
-        <TouchableOpacity onPress={onDelete(id)}>
+        <TouchableOpacity onPress={() => onRemove(commentItem.id)}>
           <AntDesign
             name="close"
             size={20}

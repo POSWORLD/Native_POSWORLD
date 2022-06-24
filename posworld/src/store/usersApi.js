@@ -1,4 +1,3 @@
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { call, put } from "redux-saga/effects";
@@ -8,6 +7,9 @@ import {
   LOGIN_FAIL,
   LOGIN_CHECK_SUCCESS,
   LOGIN_CHECK_FAIL,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
+  LOGOUT_SUCCESS,
 } from "./actionType";
 
 export const loginValue = function* (action) {
@@ -36,7 +38,6 @@ export const loginCheckValue = function* (action) {
   }
 };
 
-
 const loginCheckApi = (action) => {
   // console.log("loginCheckApi들어옴");
   return customAxios("/member/me", "get");
@@ -44,26 +45,34 @@ const loginCheckApi = (action) => {
 
 export const updateUserValue = function* (action) {
   console.log("updateUserValue들어옴");
-  console.log(action.params);
+  console.log(">>>>>>>>>>>>>>>>>", action.params);
   try {
     let filePath = "";
-    const { userid, img, file, name } = action.params;
+    const { userid, prophoto, file, name } = action.params;
     let uploadFile = new FormData();
     uploadFile.append("file", file);
     if (file) {
       filePath = fileAxios("/upload", "post", uploadFile);
     }
     const user = {
-      userId: Number(myId),
+      userid,
       name,
-      prophoto: filePath ? filePath : img,
+      prophoto: filePath ? filePath : prophoto,
     };
-    const result = yield call(updateUserApi, action);
-  } catch {}
+    const result = yield call(updateUserApi, action.params);
+    yield put({ type: UPDATE_USER_SUCCESS, data: result });
+  } catch (err) {
+    yield put({ type: UPDATE_USER_FAIL, data: err });
+  }
 };
 
 const updateUserApi = (action) => {
-  // console.log("updateUserApi들어옴");
+  console.log("updateUserApi들어옴");
+  return customAxios("/member/name", "post", action);
+};
+
+export const logoutValue = function* () {
+  yield put({ type: LOGOUT_SUCCESS, data: true });
 };
 
 // export const idCheckApi = async (user) => {
@@ -100,10 +109,6 @@ const updateUserApi = (action) => {
 //     },
 //   });
 //   return response.data;
-// };
-
-// export const logoutApi = async (userId) => {
-//   return true;
 // };
 
 // export const getUserApi = async (id) => {

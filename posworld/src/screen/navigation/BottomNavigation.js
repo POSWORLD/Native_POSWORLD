@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Icon from "react-native-vector-icons/FontAwesome";
 import Materiallcons from "react-native-vector-icons/MaterialIcons";
 import BoardScreen from "../BoardScreen";
+import ProfileScreen from "../ProfileScreen";
 import PhotoScreen from "../photo/PhotoScreen";
 const Tab = createMaterialBottomTabNavigator();
 function BottomNavigation() {
@@ -61,7 +62,7 @@ function BottomNavigation() {
       />
       <Tab.Screen
         name="Setting"
-        component={HomeScreen}
+        component={ProfileScreen}
         options={{
           tabBarLabel: "더보기",
           tabBarIcon: ({ color }) => (

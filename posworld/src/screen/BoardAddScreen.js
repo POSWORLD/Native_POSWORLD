@@ -3,13 +3,16 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
-import { createBoard } from '../store/boards';
+import { createboard } from '../store/boards';
+import { useIsFocused } from '@react-navigation/native';
 
 const BoardAddScreen = ({ navigation }) => {
    const { top } = useSafeAreaInsets();
+
    const [form, setForm] = useState({
       content: '',
       userId: 1,
+      homeId: 0,
    });
    const dispatch = useDispatch();
    const onChangeTextHandler = (name, value) => {
@@ -18,7 +21,8 @@ const BoardAddScreen = ({ navigation }) => {
    console.log(form);
    const onsubmit = () => {
       alert('등록');
-      dispatch(createBoard(form));
+      dispatch(createboard(form));
+      navigation.goBack();
    };
    return (
       <View>

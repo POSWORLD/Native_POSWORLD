@@ -53,10 +53,8 @@ const LoginScreen = () => {
       </View>
 
       <View style={styles.buttonView}>
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText} onPress={onSubmit}>
-            로그인
-          </Text>
+        <TouchableOpacity style={styles.loginBtn} onPress={onSubmit}>
+          <Text style={styles.loginText}>로그인</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity>

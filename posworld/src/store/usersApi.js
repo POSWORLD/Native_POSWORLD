@@ -41,19 +41,20 @@ const loginCheckApi = (action) => {
 };
 
 export const updateUserValue = function* (action) {
-  // console.log("updateUserValue들어옴");
+  console.log("updateUserValue들어옴");
+  console.log(action.params);
   try {
     let filePath = "";
-    const { userid, img, file, name } = action;
+    const { userid, img, file, name } = action.params;
     let uploadFile = new FormData();
     uploadFile.append("file", file);
     if (file) {
       filePath = fileAxios("/upload", "post", uploadFile);
     }
-    const post = {
-      content,
-      img: filePath ? filePath : img,
+    const user = {
       userId: Number(myId),
+      name,
+      prophoto: filePath ? filePath : img,
     };
     const result = yield call(updateUserApi, action);
   } catch {}

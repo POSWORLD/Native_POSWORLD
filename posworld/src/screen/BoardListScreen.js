@@ -1,3 +1,4 @@
+
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteboard } from '../store/boards';
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
       marginRight: 16,
    },
    /*  subCardView: {
+
       height: 50,
       width: 50,
       borderRadius: 25,

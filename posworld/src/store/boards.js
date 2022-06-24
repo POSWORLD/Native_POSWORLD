@@ -1,3 +1,4 @@
+
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { deleteBoardByNum, getBoardByHomeId, insertBoard } from './boardsApi';
 const CREATE_BOARD_LOAD = 'BOARD/CREATE_LOAD';
@@ -18,33 +19,47 @@ export function* BoardSaga() {
    yield takeLatest(CREATE_BOARD_LOAD, addBoard);
    yield takeLatest(SELECT_BOARD_LOAD, selectBoard);
    yield takeLatest(DELETE_BOARD_LOAD, deleteBoard);
+
 }
 
 const initialBoard = {
-   board: {},
-   loading: false,
-   success: false,
-   enableAccess: false,
+  board: {},
+  loading: false,
+  success: false,
+  enableAccess: false,
 };
-
 function* addBoard(action) {
-   try {
-      console.log('insert');
-      const result = yield call(insertBoard, action.params);
-      yield put({ type: CREATE_BOARD_SUCCESS, data: result });
-   } catch (err) {
-      yield put({ type: CREATE_BOARD_FAIL, data: err });
-   }
+  try {
+    console.log("insert");
+    const result = yield call(insertBoard, action.params);
+    yield put({ type: CREATE_BOARD_SUCCESS, data: result });
+  } catch (err) {
+    yield put({ type: CREATE_BOARD_FAIL, data: err });
+  }
+}
+function* selectBoard(action) {
+  try {
+    const result = yield call(getBoardByHomeId, action.homeId);
+    yield put({ type: SELECT_BOARD_SUCCESS, data: result });
+  } catch (err) {
+    yield put({ type: SELECT_BOARD_FAIL, data: err });
+  }
 }
 
-function* selectBoard(action) {
-   try {
-      const result = yield call(getBoardByHomeId, action.homeId);
-      yield put({ type: SELECT_BOARD_SUCCESS, data: result });
-   } catch (err) {
-      yield put({ type: SELECT_BOARD_FAIL, data: err });
-   }
+function* deleteBoard(action) {
+  try {
+    const result = yield call(
+      deleteBoardByNum,
+      action.num,
+      action.boards.board
+    );
+
+    yield put({ type: DELETE_BOARD_SUCCESS, data: result });
+  } catch (err) {
+    yield put({ type: DELETE_BOARD_FAIL, data: err });
+  }
 }
+
 
 function* deleteBoard(action) {
    try {
@@ -114,4 +129,5 @@ const boards = (state = initialBoard, action) =>
             return state;
       }
    });
+
 export default boards;

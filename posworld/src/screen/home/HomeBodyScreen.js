@@ -10,7 +10,7 @@ function HomeBodyScreen({ name }) {
                 <View style={{ flex: 4 }}>
                     <View style={styles.one}>
                         <View style={{ flex: 1 }}>
-                            <Image source={require('./img/1.png')} style={{ width: 100, height: 100 }}></Image>
+                            <Image source={require('./img/dog.jpg')} style={{ width: 100, height: 100 }}></Image>
                         </View>
                         <View style={{ flex: 3 }}>
                             <Text>{`     TODAY 0 | 5`}</Text>
@@ -22,7 +22,7 @@ function HomeBodyScreen({ name }) {
                 <View style={{ flex: 1 }}>
                     <Text
                         style={styles.text}
-                    >{` today is...                                                             일촌 17 즐겨찾기 0`}</Text>
+                    >{` today is...                                                      일촌 17 즐겨찾기 0`}</Text>
                 </View>
             </View>
         </>

@@ -1,13 +1,24 @@
+import { useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSelector, useDispatch } from 'react-redux';
+import homes, { select } from '../../store/homes';
 
 function HomeCommentScreen({ name }) {
-    const { top } = useSafeAreaInsets();
+    const dispatch = useDispatch();
+
+    const home = useSelector((state) => state.homes.home);
+
+    useEffect(() => {
+        console.log('시작');
+        dispatch(select());
+    }, []);
+
     return (
         <>
             <View style={styles.block}>
                 <Text style={styles.text}>한 줄 감성</Text>
-                <Text>css 어렵다</Text>
+                <Text>{home.content}</Text>
             </View>
         </>
     );

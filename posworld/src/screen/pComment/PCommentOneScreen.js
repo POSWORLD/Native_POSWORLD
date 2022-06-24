@@ -1,8 +1,8 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AntDesign from "react-native-vector-icons/AntDesign";
-function PCommentOneScreen(content, id, name, pid, wdate) {
-  console.log("content", content);
+import changeTime from "../photo/changeTime";
+function PCommentOneScreen({ commentItem, commentList }) {
   const onDelete = (id) => {};
   return (
     <View style={styles.wrapper}>
@@ -15,9 +15,11 @@ function PCommentOneScreen(content, id, name, pid, wdate) {
         ></Image>
       </View>
       <View style={StyleSheet.profileText}>
-        <Text style={{ flex: 1 }}> {name}</Text>
-        <Text style={{ flex: 1 }}> {content}</Text>
-        <Text style={{ flex: 1, color: "#B0ACAC" }}>{wdate}</Text>
+        <Text style={{ flex: 1 }}> {commentItem.name}</Text>
+        <Text style={{ flex: 1 }}> {commentItem.content}</Text>
+        <Text style={{ flex: 1, color: "#B0ACAC" }}>
+          {changeTime(commentItem.wdate)}
+        </Text>
       </View>
       <View style={{ flex: 0.2, textAlign: "end" }}>
         <TouchableOpacity onPress={onDelete(id)}>

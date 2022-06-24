@@ -14,10 +14,12 @@ function PCommentScreen() {
   const dispatch = useDispatch();
   const pComments = useSelector((state) => state.pComments);
   const commentList = useSelector((state) => state.pComments.comments);
+  const photoid = useSelector((state) => state.photos.pid);
   console.log("commentList", commentList);
   const isFocused = useIsFocused();
+
   const [message, setMessage] = useState({
-    pid: "1",
+    pid: photoid,
     content: "",
     userid: "1",
   });
@@ -57,15 +59,12 @@ function PCommentScreen() {
         ) : (
           <FlatList
             data={Object.keys(commentList)}
-            renderItem={(key) =>
-              PCommentOneScreen(
-                commentList[key.index].content,
-                commentList[key.index].id,
-                commentList[key.index].name,
-                commentList[key.index].pid,
-                commentList[key.index].wdate
-              )
-            }
+            renderItem={(key) => (
+              <PCommentOneScreen
+                commentItem={commentList[key.index]}
+                commentList={commentList}
+              />
+            )}
             keyExtractor={(key) => key}
           />
         )}

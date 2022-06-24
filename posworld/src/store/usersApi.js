@@ -36,6 +36,7 @@ export const loginCheckValue = function* (action) {
   }
 };
 
+
 const loginCheckApi = (action) => {
   // console.log("loginCheckApi들어옴");
   return customAxios("/member/me", "get");

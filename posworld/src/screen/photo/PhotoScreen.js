@@ -1,7 +1,6 @@
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import HeaderScreen from "../HeaderScreen";
-import { IMG_PATH } from "../../http/CustomAxios";
 import { ActivityIndicator, FAB } from "react-native-paper";
 import { selectPhoto } from "../../store/photos";
 import { useEffect } from "react";
@@ -11,10 +10,9 @@ function PhotoScreen() {
   const dispatch = useDispatch();
   const photos = useSelector((state) => state.photos);
   const photolist = useSelector((state) => state.photos.photo);
-  console.log(photolist);
+
   const isFocused = useIsFocused();
   const getPhotolist = () => {
-    console.log("하냐");
     dispatch(selectPhoto());
   };
 

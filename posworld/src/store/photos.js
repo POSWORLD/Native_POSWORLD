@@ -1,54 +1,49 @@
-import {
-  getPhotoByIdApi,
-  deletePhotoApi,
-  postPhotoApi,
-  getPhotoApi,
-} from "./photosApi";
-import produce from "immer";
-import { takeLatest, call, put } from "redux-saga/effects";
+import { getPhotoByIdApi, deletePhotoApi, postPhotoApi, getPhotoApi } from './photosApi';
+import produce from 'immer';
+import { takeLatest, call, put } from 'redux-saga/effects';
 
-export const SELECT_PHOTO = "PHOTO/SELECT";
-export const SELECT_PHOTO_SUCCESS = "PHOTO/SELECT_SUCCESS";
-export const SELECT_PHOTO_FAIL = "PHOTO/SELECT_FAIL";
+export const SELECT_PHOTO = 'PHOTO/SELECT';
+export const SELECT_PHOTO_SUCCESS = 'PHOTO/SELECT_SUCCESS';
+export const SELECT_PHOTO_FAIL = 'PHOTO/SELECT_FAIL';
 
-export const SELECT_PHOTO_BY_ID = "DETAIL/SELECT";
-export const SELECT_PHOTO_BY_ID_SUCCESS = "DETAIL/SELECT_SUCCESS";
-export const SELECT_PHOTO_BY_ID_FAIL = "DETAIL/SELECT _FAIL";
+export const SELECT_PHOTO_BY_ID = 'DETAIL/SELECT';
+export const SELECT_PHOTO_BY_ID_SUCCESS = 'DETAIL/SELECT_SUCCESS';
+export const SELECT_PHOTO_BY_ID_FAIL = 'DETAIL/SELECT _FAIL';
 
-export const SET_PID = "PID/SET";
-export const SET_PID_SUCCESS = "PID/SET_SUCCESS";
-export const SET_PID_FAIL = "PID/SET_FAIL";
+export const SET_PID = 'PID/SET';
+export const SET_PID_SUCCESS = 'PID/SET_SUCCESS';
+export const SET_PID_FAIL = 'PID/SET_FAIL';
 
-export const INSERT_PHOTO = "INSERT_PHOTO";
-export const INSERT_PHOTO_SUCCESS = "INSERT_PHOTO_SUCCESS";
-export const INSERT_PHOTO_FAIL = "INSERT_PHOTO_FAIL";
-export const DELETE_PHOTO = "DELETE_PHOTO";
-export const DELETE_PHOTO_SUCCESS = "DELETE_PHOTO_SUCCESS";
-export const DELETE_PHOTO_FAIL = "DELETE_PHOTO_FAIL";
+export const INSERT_PHOTO = 'INSERT_PHOTO';
+export const INSERT_PHOTO_SUCCESS = 'INSERT_PHOTO_SUCCESS';
+export const INSERT_PHOTO_FAIL = 'INSERT_PHOTO_FAIL';
+export const DELETE_PHOTO = 'DELETE_PHOTO';
+export const DELETE_PHOTO_SUCCESS = 'DELETE_PHOTO_SUCCESS';
+export const DELETE_PHOTO_FAIL = 'DELETE_PHOTO_FAIL';
 
-const id = "1";
+const id = '1';
 export const selectPhoto = () => ({ type: SELECT_PHOTO, id });
 export const selectPhotoById = (pid) => ({ type: SELECT_PHOTO_BY_ID, pid });
 export const setPid = (id) => ({ type: SET_PID, id });
 export const insertPhoto = (params) => ({ type: INSERT_PHOTO, params });
-export const delPhoto = (id) => ({ type: DELETE_PHOTO, id });
+export const delPhoto = (pid) => ({ type: DELETE_PHOTO, pid });
 
 const initialPhoto = {
-  pid: 1,
-  photo: {},
-  photoDetail: [],
-  loading: false,
-  success: false,
-  enableAccess: false,
+    pid: 1,
+    photo: {},
+    photoDetail: [],
+    loading: false,
+    success: false,
+    enableAccess: false,
 };
 
 //사가함수
 export function* photoSaga() {
-  yield takeLatest(SELECT_PHOTO, getPhoto);
-  yield takeLatest(SELECT_PHOTO_BY_ID, getPhotoById);
-  yield takeLatest(SET_PID, createPid);
-  yield takeLatest(INSERT_PHOTO, postPhoto);
-  yield takeLatest(DELETE_PHOTO, deletePhoto);
+    yield takeLatest(SELECT_PHOTO, getPhoto);
+    yield takeLatest(SELECT_PHOTO_BY_ID, getPhotoById);
+    yield takeLatest(SET_PID, createPid);
+    yield takeLatest(INSERT_PHOTO, postPhoto);
+    yield takeLatest(DELETE_PHOTO, deletePhoto);
 }
 
 const getPhotoById = function* (pid) {
@@ -61,11 +56,11 @@ const getPhotoById = function* (pid) {
 };
 
 const createPid = function* (action) {
-  try {
-    yield put({ type: SET_PID_SUCCESS, data: action.id });
-  } catch (err) {
-    yield put({ type: SET_PID_FAIL, data: err });
-  }
+    try {
+        yield put({ type: SET_PID_SUCCESS, data: action.id });
+    } catch (err) {
+        yield put({ type: SET_PID_FAIL, data: err });
+    }
 };
 
 export const getPhoto = function* (action) {
@@ -78,21 +73,21 @@ export const getPhoto = function* (action) {
 };
 
 const postPhoto = function* (action) {
-  try {
-    const result = yield call(postPhotoApi, action.params);
-    yield put({ type: INSERT_PHOTO_SUCCESS, data: result });
-  } catch (error) {
-    yield put({ type: INSERT_PHOTO_FAIL, data: error });
-  }
+    try {
+        const result = yield call(postPhotoApi, action.params);
+        yield put({ type: INSERT_PHOTO_SUCCESS, data: result });
+    } catch (error) {
+        yield put({ type: INSERT_PHOTO_FAIL, data: error });
+    }
 };
 
-const deletePhoto = function* (id) {
-  try {
-    const result = yield call(deletePhotoApi, id);
-    yield put({ type: DELETE_PHOTO_SUCCESS, data: result });
-  } catch (error) {
-    yield put({ type: DELETE_PHOTO_FAIL, data: error });
-  }
+const deletePhoto = function* (pid) {
+    try {
+        const result = yield call(deletePhotoApi, pid);
+        yield put({ type: DELETE_PHOTO_SUCCESS, data: result });
+    } catch (error) {
+        yield put({ type: DELETE_PHOTO_FAIL, data: error });
+    }
 };
 
 const photos = (state = initialPhoto, action) =>

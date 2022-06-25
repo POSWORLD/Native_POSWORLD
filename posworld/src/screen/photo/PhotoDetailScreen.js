@@ -11,7 +11,7 @@ import {
 import changeTime from "./changeTime";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import HeaderScreen from "../HeaderScreen";
-import { selectPhoto, selectPhotoById } from "../../store/photos";
+import { delPhoto, selectPhoto, selectPhotoById } from "../../store/photos";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { ActivityIndicator } from "react-native-paper";
@@ -28,6 +28,10 @@ function PhotoDetailScreen() {
   useEffect(() => {
     photoget();
   }, [isFocused]);
+  
+   const onSubmit = () => {
+        dispatch(delPhoto(pid));
+    };
   return (
     <>
       <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -45,6 +49,11 @@ function PhotoDetailScreen() {
             <Text style={styles.date}>{changeTime(photo.wdate)}</Text>
             <Text style={styles.description}>{photo.content}</Text>
           </View>
+           <View style={styles.btnview}>
+                        <TouchableOpacity onPress={onSubmit} style={styles.btn}>
+                            <Text>삭제</Text>
+                        </TouchableOpacity>
+                    </View>
           <TouchableOpacity
             style={styles.touchable}
             onPress={() => navigation.navigate("PComment")}
@@ -104,5 +113,17 @@ const styles = StyleSheet.create({
   touchable: {
     marginLeft: 10,
   },
+    btnview: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    btn: {
+        width: 75,
+        height: 55,
+        backgroundColor: '#A9D0F5',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
 });
 export default PhotoDetailScreen;

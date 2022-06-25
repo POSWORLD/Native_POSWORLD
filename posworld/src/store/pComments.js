@@ -1,5 +1,9 @@
 import { takeLatest, call, put } from "redux-saga/effects";
-import { selectPComment, postPComment, deletePComment } from "./pCommentsApi";
+import {
+  postPCommentApi,
+  selectPCommentApi,
+  deletePCommentApi,
+} from "./pCommentsApi";
 import produce from "immer";
 
 export const CREATE_PCOMMENT = "PCOMMENT/CREATE";
@@ -15,10 +19,14 @@ export const DELETE_PCOMMENT_SUCCESS = "PCOMMENT/DELETE_SUCCESS";
 export const DELETE_PCOMMENT_FAIL = "PCOMMENT/DELETE_FAIL";
 
 //액션함수
-const id = "1";
 export const createPcomment = (params) => ({ type: CREATE_PCOMMENT, params });
-export const selectPcomment = () => ({ type: SELECT_PCOMMENT, id });
-export const deletePcomment = (id) => ({ type: DELETE_PCOMMENT, id });
+export const selectPcomment = (pid) => ({ type: SELECT_PCOMMENT, pid });
+export const deletePcomment = (id, userid, comments) => ({
+  type: DELETE_PCOMMENT,
+  id,
+  userid,
+  comments,
+});
 
 const initialPcomment = {
   pid: 0,
@@ -34,6 +42,35 @@ export function* pCommentSaga() {
   yield takeLatest(SELECT_PCOMMENT, selectPComment);
   yield takeLatest(DELETE_PCOMMENT, deletePComment);
 }
+
+const postPComment = function* (action) {
+  try {
+    const result = yield call(postPCommentApi, action.params);
+    yield put({ type: CREATE_PCOMMENT_SUCCESS, data: result });
+  } catch (err) {
+    yield put({ type: CREATE_PCOMMENT_FAIL, data: err });
+  }
+};
+
+const selectPComment = function* (action) {
+  try {
+    const result = yield call(selectPCommentApi, action.pid);
+    yield put({ type: SELECT_PCOMMENT_SUCCESS, data: result });
+  } catch (err) {
+    yield put({ type: SELECT_PCOMMENT_FAIL, data: err });
+  }
+};
+
+const deletePComment = function* (action) {
+  try {
+    console.log("action", action);
+    const result = yield call(deletePCommentApi, action);
+    console.log("result", result);
+    yield put({ type: DELETE_PCOMMENT_SUCCESS, data: result });
+  } catch (err) {
+    yield put({ type: DELETE_PCOMMENT_FAIL, data: err });
+  }
+};
 
 const pComments = (state = initialPcomment, action) =>
   produce(state, (draft) => {
@@ -69,8 +106,10 @@ const pComments = (state = initialPcomment, action) =>
         draft.success = false;
         break;
       case DELETE_PCOMMENT_SUCCESS:
+        console.log("success delete");
         draft.loading = false;
         draft.success = true;
+        draft.comments = action.data;
         break;
       case DELETE_PCOMMENT_FAIL:
         draft.loading = false;

@@ -47,14 +47,12 @@ export function* photoSaga() {
 }
 
 const getPhotoById = function* (pid) {
-    try {
-        console.log('pidsss', pid);
-        const result = yield call(getPhotoByIdApi, pid);
-        console.log('result', result);
-        yield put({ type: SELECT_PHOTO_BY_ID_SUCCESS, data: result });
-    } catch (err) {
-        yield put({ type: SELECT_PHOTO_BY_ID_FAIL, data: err });
-    }
+  try {
+    const result = yield call(getPhotoByIdApi, pid);
+    yield put({ type: SELECT_PHOTO_BY_ID_SUCCESS, data: result });
+  } catch (err) {
+    yield put({ type: SELECT_PHOTO_BY_ID_FAIL, data: err });
+  }
 };
 
 const createPid = function* (action) {
@@ -66,13 +64,12 @@ const createPid = function* (action) {
 };
 
 export const getPhoto = function* (action) {
-    try {
-        console.log('action', action.id);
-        const result = yield call(getPhotoApi, action.id);
-        yield put({ type: SELECT_PHOTO_SUCCESS, data: result });
-    } catch (err) {
-        yield put({ type: SELECT_PHOTO_FAIL, data: err });
-    }
+  try {
+    const result = yield call(getPhotoApi, action.id);
+    yield put({ type: SELECT_PHOTO_SUCCESS, data: result });
+  } catch (err) {
+    yield put({ type: SELECT_PHOTO_FAIL, data: err });
+  }
 };
 
 const postPhoto = function* (action) {
@@ -94,71 +91,67 @@ const deletePhoto = function* (pid) {
 };
 
 const photos = (state = initialPhoto, action) =>
-    produce(state, (draft) => {
-        switch (action.type) {
-            case SELECT_PHOTO:
-                draft.success = false;
-                draft.loading = true;
-                break;
-            case SELECT_PHOTO_SUCCESS:
-                console.log('성공');
-                draft.success = true;
-                draft.loading = false;
-                draft.photo = action.data;
-                break;
-            case SELECT_PHOTO_FAIL:
-                console.log('fail');
-                draft.success = false;
-                draft.loading = false;
-                break;
-            case SELECT_PHOTO_BY_ID:
-                draft.success = false;
-                draft.loading = true;
-                break;
-            case SELECT_PHOTO_BY_ID_SUCCESS:
-                draft.success = true;
-                draft.loading = false;
-                console.log('action', action);
-                draft.photoDetail = action.data;
-                break;
-            case SELECT_PHOTO_BY_ID_FAIL:
-                draft.success = false;
-                draft.loading = false;
-                break;
-            case SET_PID:
-                draft.loading = true;
-                break;
-            case SET_PID_SUCCESS:
-                draft.loading = false;
-                console.log(action);
-                draft.pid = action.data;
-                break;
-            case INSERT_PHOTO:
-                draft.loading = true;
-                draft.success = false;
-                break;
-            case INSERT_PHOTO_SUCCESS:
-                draft.loading = false;
-                draft.success = true;
-                break;
-            case INSERT_PHOTO_FAIL:
-                draft.loading = false;
-                draft.success = false;
-                break;
-            case DELETE_PHOTO:
-                draft.loading = true;
-                draft.success = false;
-                break;
-            case DELETE_PHOTO_SUCCESS:
-                draft.loading = false;
-                draft.success = true;
-                break;
-            case DELETE_PHOTO_FAIL:
-                draft.loading = false;
-                draft.success = false;
-                break;
-            default:
-                return state;
-        }
-    });
+  produce(state, (draft) => {
+    switch (action.type) {
+      case SELECT_PHOTO:
+        draft.success = false;
+        draft.loading = true;
+        break;
+      case SELECT_PHOTO_SUCCESS:
+        draft.success = true;
+        draft.loading = false;
+        draft.photo = action.data;
+        break;
+      case SELECT_PHOTO_FAIL:
+        draft.success = false;
+        draft.loading = false;
+        break;
+      case SELECT_PHOTO_BY_ID:
+        draft.success = false;
+        draft.loading = true;
+        break;
+      case SELECT_PHOTO_BY_ID_SUCCESS:
+        draft.success = true;
+        draft.loading = false;
+        draft.photoDetail = action.data;
+        break;
+      case SELECT_PHOTO_BY_ID_FAIL:
+        draft.success = false;
+        draft.loading = false;
+        break;
+      case SET_PID:
+        draft.loading = true;
+        break;
+      case SET_PID_SUCCESS:
+        draft.loading = false;
+        draft.pid = action.data;
+        break;
+      case INSERT_PHOTO:
+        draft.loading = true;
+        draft.success = false;
+        break;
+      case INSERT_PHOTO_SUCCESS:
+        draft.loading = false;
+        draft.success = true;
+        break;
+      case INSERT_PHOTO_FAIL:
+        draft.loading = false;
+        draft.success = false;
+        break;
+      case DELETE_PHOTO:
+        draft.loading = true;
+        draft.success = false;
+        break;
+      case DELETE_PHOTO_SUCCESS:
+        draft.loading = false;
+        draft.success = true;
+        break;
+      case DELETE_PHOTO_FAIL:
+        draft.loading = false;
+        draft.success = false;
+        break;
+      default:
+        return state;
+    }
+  });
 export default photos;

@@ -8,25 +8,39 @@ import { TextInput } from "react-native-paper";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { createPcomment, selectPcomment } from "../../store/pComments";
+import {
+  createPcomment,
+  selectPcomment,
+  deletePcomment,
+} from "../../store/pComments";
 import { useIsFocused } from "@react-navigation/native";
 function PCommentScreen() {
   const dispatch = useDispatch();
   const pComments = useSelector((state) => state.pComments);
   const commentList = useSelector((state) => state.pComments.comments);
+  const photoid = useSelector((state) => state.photos.pid);
   console.log("commentList", commentList);
   const isFocused = useIsFocused();
+
+  const onDelete = (id) => {
+    dispatch(deletePcomment(id, 1));
+    commentPatch();
+  };
+
   const [message, setMessage] = useState({
-    pid: "1",
+    pid: photoid,
     content: "",
     userid: "1",
   });
 
+  const [text, setText] = useState("");
+
   const commentPatch = () => {
-    dispatch(selectPcomment());
+    dispatch(selectPcomment(photoid));
   };
 
   const onChangeTextHandler = (name, value) => {
+    setText(value);
     setMessage({
       ...message,
       [name]: value,
@@ -35,10 +49,11 @@ function PCommentScreen() {
 
   const onSubmit = () => {
     dispatch(createPcomment(message));
+    setText("");
+    commentPatch();
   };
 
   useEffect(() => {
-    console.log("select");
     commentPatch();
   }, [isFocused]);
   return (
@@ -57,15 +72,13 @@ function PCommentScreen() {
         ) : (
           <FlatList
             data={Object.keys(commentList)}
-            renderItem={(key) =>
-              PCommentOneScreen(
-                commentList[key.index].content,
-                commentList[key.index].id,
-                commentList[key.index].name,
-                commentList[key.index].pid,
-                commentList[key.index].wdate
-              )
-            }
+            renderItem={(key) => (
+              <PCommentOneScreen
+                onDelete={onDelete}
+                commentItem={commentList[key.index]}
+                commentList={commentList}
+              />
+            )}
             keyExtractor={(key) => key}
           />
         )}
@@ -73,6 +86,7 @@ function PCommentScreen() {
       <View style={styles.textInputDiv}>
         <TextInput
           mode="outlined"
+          value={text}
           placeholder="따뜻한 댓글을 남겨주세요"
           onChangeText={(value) => onChangeTextHandler("content", value)}
           style={styles.textInput}

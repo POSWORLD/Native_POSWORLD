@@ -12,6 +12,7 @@ import * as ImagePicker from "expo-image-picker";
 import HomeHeaderScreen from "./home/HomeHeaderScreen";
 import { logout, updateUser } from "../store/user";
 
+
 function ProfileScreen({}) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.me);

@@ -9,16 +9,6 @@ import HomeHeaderScreen from "./home/HomeHeaderScreen";
 import HomeMiniroomScreen from "./home/HomeMiniroomScreen";
 
 function HomeScreen() {
-  console.log("HomeScreen");
-  const getId = async () => {
-    return await AsyncStorage.getItem("me");
-  };
-
-  const id = "";
-  useEffect(() => {
-    const id = getId();
-    console.log(id);
-  });
   return (
     <>
       <View style={styles.homeBg}>

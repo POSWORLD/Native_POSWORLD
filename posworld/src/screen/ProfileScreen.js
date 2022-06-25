@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import HomeHeaderScreen from "./home/HomeHeaderScreen";
+import { logout, updateUser } from "../store/user";
+
 
 function ProfileScreen({}) {
   const dispatch = useDispatch();
@@ -18,11 +20,12 @@ function ProfileScreen({}) {
   console.log(user);
 
   const [form, setForm] = useState({
-    userid: 1,
-    img: "img",
+    userid: user.userid,
+    prophoto: user.prophoto,
     file: "",
-    name: "",
+    name: user.name,
   });
+
   const [previewImg, setPreviewImg] = useState("");
   let openImagePickerAsync = async () => {
     let permissionResult =
@@ -38,40 +41,33 @@ function ProfileScreen({}) {
     });
 
     const splitUri = pickerResult.uri.split("/");
-    const img = `${splitUri[splitUri.length - 1]}`;
+    const prophoto = `${splitUri[splitUri.length - 1]}`;
     const splitUriType = pickerResult.uri.split(".");
     const type = `image/${splitUriType[splitUriType.length - 1]}`;
     const file = {
       uri: pickerResult.uri.replace("file:/data", "file:///data"),
-      name: img,
+      name: prophoto,
       type,
     };
     setForm({
       ...form,
-      img,
+      prophoto,
       file,
     });
     setPreviewImg(pickerResult.uri);
   };
 
-  const onSubmit = async () => {
-    await dispatch(updateUser(form));
+  const onSubmit = () => {
+    dispatch(updateUser(form));
+    // navigation.goBack();
   };
 
-  const withdrawal = async () => {
-    const deleteResult = await dispatch(deleteUser(id));
-    if (deleteResult.payload == 1) {
-      alert("회원탈퇴에 성공했습니다.");
-      await dispatch(logout());
-      modalClose();
-      neviate("/login");
-    } else {
-      alert("회원탈퇴에 실패했습니다.");
-    }
+  const logoutBtn = () => {
+    dispatch(logout());
   };
-  // const onSubmit = () => {
-  //   dispatch(insertPosts(post));
-  //   // navigation.goBack();
+
+  // const withdrawal = () => {
+  //   dispatch(deleteUser(user.id));
   // };
 
   return (
@@ -95,8 +91,8 @@ function ProfileScreen({}) {
       <View style={styles.body}>
         <View style={styles.item}>
           <TextInput
-            placeholder="닉네임"
-            onChangeText={(value) => setPost({ ...post, name: value })}
+            value={form.name}
+            onChangeText={(value) => setForm({ ...form, name: value })}
           ></TextInput>
         </View>
         <View style={styles.item}>
@@ -105,12 +101,12 @@ function ProfileScreen({}) {
           </TouchableOpacity>
         </View>
         <View style={styles.item}>
-          <TouchableOpacity style={styles.profileBtn}>
+          <TouchableOpacity style={styles.profileBtn} onPress={logoutBtn}>
             <Text style={styles.profileText}>로그아웃</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.item}>
-          <TouchableOpacity style={styles.profileBtn}>
+          <TouchableOpacity style={styles.profileBtn} onPress={logoutBtn}>
             <Text style={styles.profileText}>회원탈퇴</Text>
           </TouchableOpacity>
         </View>

@@ -19,24 +19,26 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 function PCommentScreen() {
   const dispatch = useDispatch();
   const pComments = useSelector((state) => state.pComments);
+  const myId = useSelector((state) => state.user.myId);
   const commentList = useSelector((state) => state.pComments.comments);
   const photoid = useSelector((state) => state.photos.pid);
-  console.log("commentList", commentList);
   const isFocused = useIsFocused();
 
   const onDelete = (id) => {
-    dispatch(deletePcomment(id, 1));
+    const myId = getId();
+    dispatch(deletePcomment(id, myId));
     commentPatch();
   };
 
   const [message, setMessage] = useState({
     pid: photoid,
     content: "",
-    userid: "",
+    userid: myId,
   });
 
   const getId = async () => {
-    return await AsyncStorage.getItem("myId");
+    const myId = await AsyncStorage.getItem("myId");
+    return myId;
   };
 
   const [text, setText] = useState("");
@@ -54,22 +56,14 @@ function PCommentScreen() {
   };
 
   const onSubmit = async () => {
-    console.log("들어옴");
-    const myId = await getId();
-    console.log("들어옴1");
-    message["userid"] = myId;
-    console.log("들어옴2");
-    console.log(">>>>>>>submit>>>");
-    console.log(message);
-    dispatch(createPcomment(message));
-    message[""];
+    await dispatch(createPcomment(message));
+    await dispatch(selectPcomment(photoid));
     setText("");
-    commentPatch();
   };
 
   useEffect(() => {
     commentPatch();
-  }, [isFocused]);
+  }, []);
   return (
     <>
       <HeaderScreen name="댓글" />

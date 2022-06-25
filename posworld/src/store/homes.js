@@ -17,6 +17,7 @@ export const updatePhoto = (params) => ({ type: UPDATE_HOME_PHOTO, params });
 const initialHome = {
     id: 0,
     home: {},
+    homeId:{},
     loading: false,
     success: false,
     enableAccess: false,
@@ -90,6 +91,7 @@ const homes = (state = initialHome, action) =>
             case READ_HOME_SUCCESS:
                 console.log(action);
                 draft.home = action.data;
+                draft.homeId = action.data.id;
                 draft.loading = false;
                 draft.success = true;
                 break;

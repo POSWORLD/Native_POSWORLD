@@ -32,7 +32,6 @@ const initialBoard = {
 };
 function* addBoard(action) {
   try {
-    console.log("insert");
     const result = yield call(insertBoard, action.params);
     yield put({ type: CREATE_BOARD_SUCCESS, data: result });
   } catch (err) {

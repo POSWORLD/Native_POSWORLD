@@ -11,13 +11,14 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import HomeHeaderScreen from "./home/HomeHeaderScreen";
 import { logout, updateUser } from "../store/user";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function ProfileScreen({}) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.me);
-  console.log("ProfileScreen");
-  console.log(user);
+
+  // console.log("ProfileScreen");
+  // console.log(user);
 
   const [form, setForm] = useState({
     userid: user.userid,

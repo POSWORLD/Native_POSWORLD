@@ -21,7 +21,9 @@ export const getPhotoByIdApi = async (pid) => {
 
 export const postPhotoApi = async (photo) => {
     try {
-        const response = await customAxios('photo/2', 'post', photo);
+        console.log(photo.userid);
+        console.log('photo', photo.params);
+        const response = await customAxios(`photo/${photo.userid}`, 'post', photo.params);
         return response;
     } catch (error) {
         throw error;

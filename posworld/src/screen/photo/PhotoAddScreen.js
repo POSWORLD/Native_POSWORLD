@@ -17,6 +17,8 @@ const PhotoAddScreen = ({ navigation }) => {
         file: '',
     });
 
+    const [previewImg, setPreviewImg] = useState('');
+
     let openImagePickerAsync = async () => {
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -53,10 +55,12 @@ const PhotoAddScreen = ({ navigation }) => {
             img: filePath ? filePath : img,
             file,
         });
+
+        setPreviewImg(pickerResult.uri);
     };
 
     const onSubmit = () => {
-        dispatch(insertPhoto(photo));
+        dispatch(insertPhoto(photo, 2));
         navigation.navigate('Photo');
         dispatch(selectPhoto());
     };
@@ -68,7 +72,8 @@ const PhotoAddScreen = ({ navigation }) => {
                 <TouchableOpacity onPress={openImagePickerAsync} style={styles.btnview}>
                     <Text style={styles.btn}>사진 선택</Text>
                 </TouchableOpacity>
-                <Image source={{ uri: photo.file.uri }} style={{ height: 200, width: 200, marginLeft: 10 }}></Image>
+                {/* <Image source={{ uri: photo.file.uri }} style={{ height: 200, width: 200, marginLeft: 10 }}></Image> */}
+                {previewImg ? <Image source={{ uri: previewImg }} style={{ height: 200, width: 200 }}></Image> : null}
             </View>
             <View style={{ flex: 1.3 }}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

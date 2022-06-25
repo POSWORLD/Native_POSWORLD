@@ -21,11 +21,11 @@ export const DELETE_PHOTO = 'DELETE_PHOTO';
 export const DELETE_PHOTO_SUCCESS = 'DELETE_PHOTO_SUCCESS';
 export const DELETE_PHOTO_FAIL = 'DELETE_PHOTO_FAIL';
 
-const id = '1';
+const id = '2';
 export const selectPhoto = () => ({ type: SELECT_PHOTO, id });
 export const selectPhotoById = (pid) => ({ type: SELECT_PHOTO_BY_ID, pid });
 export const setPid = (id) => ({ type: SET_PID, id });
-export const insertPhoto = (params) => ({ type: INSERT_PHOTO, params });
+export const insertPhoto = (params, userid) => ({ type: INSERT_PHOTO, params, userid });
 export const delPhoto = (pid) => ({ type: DELETE_PHOTO, pid });
 
 const initialPhoto = {
@@ -47,12 +47,12 @@ export function* photoSaga() {
 }
 
 const getPhotoById = function* (pid) {
-  try {
-    const result = yield call(getPhotoByIdApi, pid);
-    yield put({ type: SELECT_PHOTO_BY_ID_SUCCESS, data: result });
-  } catch (err) {
-    yield put({ type: SELECT_PHOTO_BY_ID_FAIL, data: err });
-  }
+    try {
+        const result = yield call(getPhotoByIdApi, pid);
+        yield put({ type: SELECT_PHOTO_BY_ID_SUCCESS, data: result });
+    } catch (err) {
+        yield put({ type: SELECT_PHOTO_BY_ID_FAIL, data: err });
+    }
 };
 
 const createPid = function* (action) {
@@ -64,17 +64,18 @@ const createPid = function* (action) {
 };
 
 export const getPhoto = function* (action) {
-  try {
-    const result = yield call(getPhotoApi, action.id);
-    yield put({ type: SELECT_PHOTO_SUCCESS, data: result });
-  } catch (err) {
-    yield put({ type: SELECT_PHOTO_FAIL, data: err });
-  }
+    try {
+        const result = yield call(getPhotoApi, action.id);
+        yield put({ type: SELECT_PHOTO_SUCCESS, data: result });
+    } catch (err) {
+        yield put({ type: SELECT_PHOTO_FAIL, data: err });
+    }
 };
 
 const postPhoto = function* (action) {
     try {
-        const result = yield call(postPhotoApi, action.params);
+        console.log('postPhoto ', action);
+        const result = yield call(postPhotoApi, action);
         yield put({ type: INSERT_PHOTO_SUCCESS, data: result });
     } catch (error) {
         yield put({ type: INSERT_PHOTO_FAIL, data: error });
@@ -91,67 +92,67 @@ const deletePhoto = function* (pid) {
 };
 
 const photos = (state = initialPhoto, action) =>
-  produce(state, (draft) => {
-    switch (action.type) {
-      case SELECT_PHOTO:
-        draft.success = false;
-        draft.loading = true;
-        break;
-      case SELECT_PHOTO_SUCCESS:
-        draft.success = true;
-        draft.loading = false;
-        draft.photo = action.data;
-        break;
-      case SELECT_PHOTO_FAIL:
-        draft.success = false;
-        draft.loading = false;
-        break;
-      case SELECT_PHOTO_BY_ID:
-        draft.success = false;
-        draft.loading = true;
-        break;
-      case SELECT_PHOTO_BY_ID_SUCCESS:
-        draft.success = true;
-        draft.loading = false;
-        draft.photoDetail = action.data;
-        break;
-      case SELECT_PHOTO_BY_ID_FAIL:
-        draft.success = false;
-        draft.loading = false;
-        break;
-      case SET_PID:
-        draft.loading = true;
-        break;
-      case SET_PID_SUCCESS:
-        draft.loading = false;
-        draft.pid = action.data;
-        break;
-      case INSERT_PHOTO:
-        draft.loading = true;
-        draft.success = false;
-        break;
-      case INSERT_PHOTO_SUCCESS:
-        draft.loading = false;
-        draft.success = true;
-        break;
-      case INSERT_PHOTO_FAIL:
-        draft.loading = false;
-        draft.success = false;
-        break;
-      case DELETE_PHOTO:
-        draft.loading = true;
-        draft.success = false;
-        break;
-      case DELETE_PHOTO_SUCCESS:
-        draft.loading = false;
-        draft.success = true;
-        break;
-      case DELETE_PHOTO_FAIL:
-        draft.loading = false;
-        draft.success = false;
-        break;
-      default:
-        return state;
-    }
-  });
+    produce(state, (draft) => {
+        switch (action.type) {
+            case SELECT_PHOTO:
+                draft.success = false;
+                draft.loading = true;
+                break;
+            case SELECT_PHOTO_SUCCESS:
+                draft.success = true;
+                draft.loading = false;
+                draft.photo = action.data;
+                break;
+            case SELECT_PHOTO_FAIL:
+                draft.success = false;
+                draft.loading = false;
+                break;
+            case SELECT_PHOTO_BY_ID:
+                draft.success = false;
+                draft.loading = true;
+                break;
+            case SELECT_PHOTO_BY_ID_SUCCESS:
+                draft.success = true;
+                draft.loading = false;
+                draft.photoDetail = action.data;
+                break;
+            case SELECT_PHOTO_BY_ID_FAIL:
+                draft.success = false;
+                draft.loading = false;
+                break;
+            case SET_PID:
+                draft.loading = true;
+                break;
+            case SET_PID_SUCCESS:
+                draft.loading = false;
+                draft.pid = action.data;
+                break;
+            case INSERT_PHOTO:
+                draft.loading = true;
+                draft.success = false;
+                break;
+            case INSERT_PHOTO_SUCCESS:
+                draft.loading = false;
+                draft.success = true;
+                break;
+            case INSERT_PHOTO_FAIL:
+                draft.loading = false;
+                draft.success = false;
+                break;
+            case DELETE_PHOTO:
+                draft.loading = true;
+                draft.success = false;
+                break;
+            case DELETE_PHOTO_SUCCESS:
+                draft.loading = false;
+                draft.success = true;
+                break;
+            case DELETE_PHOTO_FAIL:
+                draft.loading = false;
+                draft.success = false;
+                break;
+            default:
+                return state;
+        }
+    });
 export default photos;

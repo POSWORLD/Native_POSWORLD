@@ -13,6 +13,7 @@ import PCommentScreen from "../pComment/PCommentScreen";
 import HomeUpdateComment from "../home/HomeUpdateCommentScreen";
 import HomeUpdatePhoto from "../home/HomeUpdatePhotoScreen";
 import PhotoDetailScreen from "../photo/PhotoDetailScreen";
+import PhotoAddScreen from "../photo/PhotoAddScreen";
 function IndexNavigate() {
   const isLogin = useSelector((state) => state.user.isLogin);
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ function IndexNavigate() {
           name="PhotoDetail"
           component={PhotoDetailScreen}
         ></Stack.Screen>
+        <Stack.Screen name="PhotoAdd" component={PhotoAddScreen}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   ) : (

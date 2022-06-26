@@ -1,5 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { IMG_PATH } from '../http/CustomAxios';
 import { deleteboard } from '../store/boards';
 import changeTime from './photo/changeTime';
 const BoardListScreen = ({ boarditem, boardlist }) => {
@@ -15,7 +16,7 @@ const BoardListScreen = ({ boarditem, boardlist }) => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                <View style={styles.subCardView}>
                   <Image
-                     source={require(`./img/minimi.png`)}
+                     source={{ uri: `${IMG_PATH}${boarditem.friendimg}` }}
                      resizeMode="contain"
                      style={{
                         borderRadius: 25,

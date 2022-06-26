@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { View, Button, Text, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 import { updatePhoto } from '../../store/homes';
 import { fileAxios } from '../../http/CustomAxios';
 const HomeUpdatePhoto = ({ navigation }) => {
     const dispatch = useDispatch();
+    const id = useSelector((state)=>state.user.myId );
     const [home, setHome] = useState({
         photo: '',
         file: '',
@@ -41,7 +42,7 @@ const HomeUpdatePhoto = ({ navigation }) => {
         setPreviewImg(pickerResult.uri);
     };
     const onSubmit = () => {
-        dispatch(updatePhoto(home));
+        dispatch(updatePhoto(home,id));
         navigation.goBack();
     };
     return (

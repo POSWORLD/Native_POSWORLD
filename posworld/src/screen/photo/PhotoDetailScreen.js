@@ -38,6 +38,7 @@ function PhotoDetailScreen() {
     const myId = await getId();
 
     dispatch(delPhoto(pid, myId));
+    navigation.goBack();
   };
   return (
     <>

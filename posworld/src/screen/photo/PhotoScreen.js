@@ -40,6 +40,7 @@ function PhotoScreen({ navigation }) {
         <FAB
           position="right"
           style={styles.fab}
+          color="#ffffff"
           icon="plus"
           onPress={() => navigation.navigate("PhotoAdd")}
           size="small"
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: "absolute",
+    backgroundColor: "#29b6f6",
     margin: 16,
     right: 0,
     flex: 1,

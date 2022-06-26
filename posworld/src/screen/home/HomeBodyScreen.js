@@ -1,22 +1,34 @@
-import { useLinkTo } from '@react-navigation/native';
+import { useIsFocused, useLinkTo } from '@react-navigation/native';
+import { useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
+import { IMG_PATH } from '../../http/CustomAxios';
+import { loginCheck } from '../../store/user';
 
 function HomeBodyScreen() {
+    const dispatch = useDispatch();
     const linkto = useLinkTo();
+    const isFocused = useIsFocused();
+    const user = useSelector((state)=>state.user.me);
+    useEffect(() => {
+        
+        
+        dispatch(loginCheck(user));
+    }, [isFocused]);
     return (
         <>
             <View style={styles.block}>
                 <View style={{ flex: 4 }}>
                     <View style={styles.one}>
                         <View style={{ flex: 1 }}>
-                            <Image source={require('./img/dog.jpg')} style={{ width: 100, height: 100 }}></Image>
+                            <Image source={{uri: `${IMG_PATH}${user.prophoto}`}} style={{ width: 100, height: 100 }}></Image>
                         </View>
                         <View style={{ flex: 3 }}>
                             <Text>{`     TODAY 0 | 5`}</Text>
-                            <Text>{`\n     양현민`}</Text>
-                            <Text>{`\n     양현민의 미니홈피`}</Text>
+                            <Text>{`\n     ${user.name}`}</Text>
+                            <Text>{`\n     ${user.name}의 미니홈피`}</Text>
                         </View>
                     </View>
                 </View>

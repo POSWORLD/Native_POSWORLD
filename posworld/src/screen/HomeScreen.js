@@ -1,7 +1,10 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+
+import { useIsFocused } from '@react-navigation/native';
+import { useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginCheck } from '../store/user';
+
 
 import HomeBodyScreen from "./home/HomeBodyScreen";
 import HomeCommentScreen from "./home/HomeCommentScreen";
@@ -9,37 +12,37 @@ import HomeHeaderScreen from "./home/HomeHeaderScreen";
 import HomeMiniroomScreen from "./home/HomeMiniroomScreen";
 
 function HomeScreen() {
-  console.log("HomeScreen");
-  const getId = async () => {
-    return await AsyncStorage.getItem("me");
-  };
 
-  const id = "";
-  useEffect(() => {
-    const id = getId();
-    console.log(id);
-  });
-  return (
-    <>
-      <View style={styles.homeBg}>
-        <View style={styles.header}>
-          <HomeHeaderScreen></HomeHeaderScreen>
-        </View>
-        <View style={styles.title}>
-          <Text>양현민님의 미니홈피</Text>
-        </View>
-        <View style={styles.body}>
-          <HomeBodyScreen></HomeBodyScreen>
-        </View>
-        <View style={styles.miniroom}>
-          <HomeMiniroomScreen></HomeMiniroomScreen>
-        </View>
-        <View style={styles.footer}>
-          <HomeCommentScreen></HomeCommentScreen>
-        </View>
-      </View>
-    </>
-  );
+    const dispatch = useDispatch();
+    
+    const isFocused = useIsFocused();
+    const user = useSelector((state)=>state.user.me);
+    useEffect(() => {
+        
+        
+        dispatch(loginCheck(user));
+    }, [isFocused]);
+    return (
+        <>
+            <View style={styles.homeBg}>
+                <View style={styles.header}>
+                    <HomeHeaderScreen></HomeHeaderScreen>
+                </View>
+                <View style={styles.title}>
+                    <Text>{`${user.name}님의 미니홈피`}</Text>
+                </View>
+                <View style={styles.body}>
+                    <HomeBodyScreen></HomeBodyScreen>
+                </View>
+                <View style={styles.miniroom}>
+                    <HomeMiniroomScreen></HomeMiniroomScreen>
+                </View>
+                <View style={styles.footer}>
+                    <HomeCommentScreen></HomeCommentScreen>
+                </View>
+            </View>
+        </>
+    );
 }
 const styles = StyleSheet.create({
   homeBg: {

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import HeaderScreen from "../HeaderScreen";
-
+import * as Notifications from "expo-notifications";
 import PCommentOneScreen from "./PCommentOneScreen";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
@@ -59,6 +59,13 @@ function PCommentScreen() {
     await dispatch(createPcomment(message));
     await dispatch(selectPcomment(photoid));
     setText("");
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Times up!",
+        body: message.content,
+      },
+      trigger: 20,
+    });
   };
 
   useEffect(() => {

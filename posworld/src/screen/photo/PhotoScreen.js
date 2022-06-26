@@ -33,7 +33,6 @@ function PhotoScreen({ navigation }) {
   };
 
   useEffect(() => {
-    console.log("시작");
     getPhotolist();
   }, [isFocused]);
 

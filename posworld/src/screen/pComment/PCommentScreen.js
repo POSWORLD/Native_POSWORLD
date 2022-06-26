@@ -14,8 +14,6 @@ import {
   deletePcomment,
 } from "../../store/pComments";
 import { useIsFocused } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 function PCommentScreen() {
   const dispatch = useDispatch();
   const pComments = useSelector((state) => state.pComments);
@@ -32,12 +30,8 @@ function PCommentScreen() {
   const [message, setMessage] = useState({
     pid: photoid,
     content: "",
-    userid: "",
+    userid: "1",
   });
-
-  const getId = async () => {
-    return await AsyncStorage.getItem("myId");
-  };
 
   const [text, setText] = useState("");
 
@@ -53,16 +47,8 @@ function PCommentScreen() {
     });
   };
 
-  const onSubmit = async () => {
-    console.log("들어옴");
-    const myId = await getId();
-    console.log("들어옴1");
-    message["userid"] = myId;
-    console.log("들어옴2");
-    console.log(">>>>>>>submit>>>");
-    console.log(message);
+  const onSubmit = () => {
     dispatch(createPcomment(message));
-    message[""];
     setText("");
     commentPatch();
   };

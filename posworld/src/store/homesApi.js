@@ -1,7 +1,7 @@
 import { customAxios } from '../http/CustomAxios';
 export const getHomeApi = async (id) => {
     try {
-        const id = 2;
+        
         const response = await customAxios(`home/${id}`, 'get');
         console.log('response', response);
         return response;
@@ -9,9 +9,9 @@ export const getHomeApi = async (id) => {
         throw error;
     }
 };
-export const updateHomeContentApi = async (home) => {
+export const updateHomeContentApi = async (home,id) => {
     try {
-        const id = 2;
+        
         const response = await customAxios(`/home/content/${id}`, 'put', home);
         return response;
     } catch (error) {
@@ -19,9 +19,9 @@ export const updateHomeContentApi = async (home) => {
     }
 };
 
-export const updateHomePhotoApi = async (home) => {
+export const updateHomePhotoApi = async (home,id) => {
     try {
-        const id = 2;
+        
         const response = await customAxios(`/home/photo/${id}`, 'put', home);
         return response;
     } catch (error) {

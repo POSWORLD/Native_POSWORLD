@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused, useLinkTo } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -9,11 +10,14 @@ import { select } from '../../store/homes';
 function HomeCommentScreen() {
     const dispatch = useDispatch();
     const linkto = useLinkTo();
-    const home = useSelector((state) => state.homes.home);
     const isFocused = useIsFocused();
+    const home = useSelector((state) => state.homes.home);
+    const id = useSelector((state)=>state.user.myId);
+    
     useEffect(() => {
-        console.log('시작');
-        dispatch(select());
+        
+        
+        dispatch(select(id));
     }, [isFocused]);
 
     return (

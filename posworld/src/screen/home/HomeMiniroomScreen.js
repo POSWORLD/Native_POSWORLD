@@ -5,13 +5,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { select } from '../../store/homes';
 import { useEffect } from 'react';
 import { useIsFocused, useLinkTo } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function HomeMiniroomScreen() {
     const dispatch = useDispatch();
     const linkto = useLinkTo();
     const isFocused = useIsFocused();
+    
     const home = useSelector((state) => state.homes.home);
+    const id = useSelector((state)=>state.user.myId );
     useEffect(() => {
-        dispatch(select());
+        
+        dispatch(select(id));
     }, [isFocused]);
     return (
         <>

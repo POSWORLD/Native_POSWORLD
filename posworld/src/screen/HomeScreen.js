@@ -1,4 +1,8 @@
+import { useIsFocused } from '@react-navigation/native';
+import { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginCheck } from '../store/user';
 
 import HomeBodyScreen from './home/HomeBodyScreen';
 import HomeCommentScreen from './home/HomeCommentScreen';
@@ -6,6 +10,15 @@ import HomeHeaderScreen from './home/HomeHeaderScreen';
 import HomeMiniroomScreen from './home/HomeMiniroomScreen';
 
 function HomeScreen() {
+    const dispatch = useDispatch();
+    
+    const isFocused = useIsFocused();
+    const user = useSelector((state)=>state.user.me);
+    useEffect(() => {
+        
+        
+        dispatch(loginCheck(user));
+    }, [isFocused]);
     return (
         <>
             <View style={styles.homeBg}>
@@ -13,7 +26,7 @@ function HomeScreen() {
                     <HomeHeaderScreen></HomeHeaderScreen>
                 </View>
                 <View style={styles.title}>
-                    <Text>양현민님의 미니홈피</Text>
+                    <Text>{`${user.name}님의 미니홈피`}</Text>
                 </View>
                 <View style={styles.body}>
                     <HomeBodyScreen></HomeBodyScreen>

@@ -19,11 +19,9 @@ const BoardAddScreen = ({ navigation }) => {
     return await AsyncStorage.getItem("homeId");
   };
 
-
   const getId = async () => {
     return await AsyncStorage.getItem("myId");
   };
-
 
   const { top } = useSafeAreaInsets();
 
@@ -54,4 +52,10 @@ const BoardAddScreen = ({ navigation }) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Text style={styles.item1}>취소</Text>
           </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
 
+export default BoardAddScreen;

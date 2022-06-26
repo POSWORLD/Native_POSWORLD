@@ -5,6 +5,7 @@ import store from "./src/store/store";
 import IndexNavigate from "./src/screen/navigation/IndexNavigate";
 import * as Notifications from "expo-notifications";
 import { useEffect } from "react";
+import registerNNPushToken from "native-notify";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -14,6 +15,8 @@ Notifications.setNotificationHandler({
   }),
 });
 export default function App() {
+  registerNNPushToken(3075, "wHKKgo5pwhDtUMXZIyaSUk");
+
   useEffect(() => {
     registerForPushNotification()
       .then((token) => console.log(token))

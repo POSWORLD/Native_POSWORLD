@@ -12,6 +12,8 @@ import {
   LOGOUT_SUCCESS,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
+  DELETE_SUCCESS,
+  DELETE_FAIL,
 } from "./actionType";
 
 export const loginValue = function* (action) {
@@ -33,7 +35,6 @@ const loginApi = (params) => {
 export const signUpValue = function* (action) {
   try {
     const result = yield call(signUpApi, action);
-    console.log(">>>>>>>>>>>>>>>>>>>>", result);
     yield put({ type: SIGNUP_SUCCESS, data: result });
   } catch (err) {
     yield put({ type: SIGNUP_FAIL, data: err });
@@ -93,6 +94,27 @@ export const logoutValue = function* () {
   yield put({ type: LOGOUT_SUCCESS, data: true });
 };
 
+export const countUserApi = async () => {
+  const response = customAxios("/member/count", "get");
+  return response;
+};
+
+export const deleteValue = function* (action) {
+  console.log("value", action);
+  try {
+    const result = yield call(deleteUserApi, action.params);
+    yield put({ type: DELETE_SUCCESS, data: true });
+  } catch (err) {
+    yield put({ type: DELETE_FAIL, data: err });
+  }
+};
+
+export const deleteUserApi = async (id) => {
+  console.log(id);
+  const response = customAxios(`/member/${id}`, "delete");
+  return response.data;
+};
+
 // export const idCheckApi = async (user) => {
 //   const response = await axios({
 //     url: "http://localhost:8001/auth/checkId",
@@ -102,48 +124,10 @@ export const logoutValue = function* () {
 //   return response.data;
 // };
 
-// export const insertUserApi = async (user) => {
-//   return await customAxios("/auth/signup", "post", user);
-// };
-
-// export const updateUserApi = async (user) => {
-//   const response = await axios({
-//     url: "http://localhost:8001/member/name",
-//     method: "post",
-//     data: user,
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem("token")}`,
-//     },
-//   });
-//   return response.data;
-// };
-
-// export const getUserCountApi = async () => {
-//   const response = await axios({
-//     url: "http://localhost:8001/member/count",
-//     method: "get",
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem("token")}`,
-//     },
-//   });
-//   return response.data;
-// };
-
 // export const getUserApi = async (id) => {
 //   const response = await axios({
 //     url: `http://localhost:8001/member/${id}`,
 //     method: "get",
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem("token")}`,
-//     },
-//   });
-//   return response.data;
-// };
-
-// export const deleteUserApi = async (id) => {
-//   const response = await axios({
-//     url: `http://localhost:8001/member/${id}`,
-//     method: "delete",
 //     headers: {
 //       Authorization: `Bearer ${localStorage.getItem("token")}`,
 //     },

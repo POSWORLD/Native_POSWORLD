@@ -21,12 +21,11 @@ export const DELETE_PHOTO = 'DELETE_PHOTO';
 export const DELETE_PHOTO_SUCCESS = 'DELETE_PHOTO_SUCCESS';
 export const DELETE_PHOTO_FAIL = 'DELETE_PHOTO_FAIL';
 
-const id = '2';
-export const selectPhoto = () => ({ type: SELECT_PHOTO, id });
+export const selectPhoto = (homeId) => ({ type: SELECT_PHOTO, homeId });
 export const selectPhotoById = (pid) => ({ type: SELECT_PHOTO_BY_ID, pid });
 export const setPid = (id) => ({ type: SET_PID, id });
 export const insertPhoto = (params, userid) => ({ type: INSERT_PHOTO, params, userid });
-export const delPhoto = (pid) => ({ type: DELETE_PHOTO, pid });
+export const delPhoto = (pid, userid) => ({ type: DELETE_PHOTO, pid, userid });
 
 const initialPhoto = {
     pid: 1,
@@ -65,7 +64,7 @@ const createPid = function* (action) {
 
 export const getPhoto = function* (action) {
     try {
-        const result = yield call(getPhotoApi, action.id);
+        const result = yield call(getPhotoApi, action.homeId);
         yield put({ type: SELECT_PHOTO_SUCCESS, data: result });
     } catch (err) {
         yield put({ type: SELECT_PHOTO_FAIL, data: err });
@@ -74,17 +73,16 @@ export const getPhoto = function* (action) {
 
 const postPhoto = function* (action) {
     try {
-        console.log('postPhoto ', action);
-        const result = yield call(postPhotoApi, action);
+        const result = yield call(postPhotoApi, action.params);
         yield put({ type: INSERT_PHOTO_SUCCESS, data: result });
     } catch (error) {
         yield put({ type: INSERT_PHOTO_FAIL, data: error });
     }
 };
 
-const deletePhoto = function* (pid) {
+const deletePhoto = function* (action) {
     try {
-        const result = yield call(deletePhotoApi, pid);
+        const result = yield call(deletePhotoApi, action);
         yield put({ type: DELETE_PHOTO_SUCCESS, data: result });
     } catch (error) {
         yield put({ type: DELETE_PHOTO_FAIL, data: error });

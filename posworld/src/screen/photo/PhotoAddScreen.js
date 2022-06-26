@@ -7,6 +7,7 @@ import HeaderScreen from '../HeaderScreen';
 import { insertPhoto, selectPhoto } from '../../store/photos';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { fileAxios } from '../../http/CustomAxios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PhotoAddScreen = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -18,6 +19,9 @@ const PhotoAddScreen = ({ navigation }) => {
     });
 
     const [previewImg, setPreviewImg] = useState('');
+    const getId = async () => {
+        return await AsyncStorage.getItem('myId');
+    };
 
     let openImagePickerAsync = async () => {
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -59,8 +63,10 @@ const PhotoAddScreen = ({ navigation }) => {
         setPreviewImg(pickerResult.uri);
     };
 
-    const onSubmit = () => {
-        dispatch(insertPhoto(photo, 2));
+    const onSubmit = async () => {
+        const myId = await getId();
+
+        dispatch(insertPhoto(photo, myId));
         navigation.navigate('Photo');
         dispatch(selectPhoto());
     };

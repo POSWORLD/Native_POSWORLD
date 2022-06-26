@@ -7,6 +7,7 @@ import HeaderScreen from '../HeaderScreen';
 import { insertPhoto, selectPhoto } from '../../store/photos';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { fileAxios } from '../../http/CustomAxios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PhotoAddScreen = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -16,6 +17,11 @@ const PhotoAddScreen = ({ navigation }) => {
         content: '',
         file: '',
     });
+
+    const [previewImg, setPreviewImg] = useState('');
+    const getId = async () => {
+        return await AsyncStorage.getItem('myId');
+    };
 
     let openImagePickerAsync = async () => {
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -53,33 +59,39 @@ const PhotoAddScreen = ({ navigation }) => {
             img: filePath ? filePath : img,
             file,
         });
+
+        setPreviewImg(pickerResult.uri);
     };
 
-    const onSubmit = () => {
-        dispatch(insertPhoto(photo));
+    const onSubmit = async () => {
+        const myId = await getId();
+
+        dispatch(insertPhoto(photo, myId));
         navigation.navigate('Photo');
         dispatch(selectPhoto());
     };
 
     return (
         <>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1.2 }}>
                 <HeaderScreen name={'사진 등록'}></HeaderScreen>
-                <TouchableOpacity onPress={openImagePickerAsync} style={styles.btnview}>
-                    <Text style={styles.btn}>사진 선택</Text>
-                </TouchableOpacity>
-                <Image source={{ uri: photo.file.uri }} style={{ height: 200, width: 200, marginLeft: 10 }}></Image>
+                <View style={styles.btnview}>
+                    <TouchableOpacity onPress={openImagePickerAsync} style={styles.btn}>
+                        <Text>사진 선택</Text>
+                    </TouchableOpacity>
+                </View>
+                {previewImg ? <Image source={{ uri: previewImg }} style={{ height: 200, width: 200 }}></Image> : null}
             </View>
-            <View style={{ flex: 1.3 }}>
+            <View style={styles.text}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    <Text style={styles.text}>제목</Text>
+                    <Text style={styles.title}>제목</Text>
                     <TextInput
                         multiline={true}
                         onChangeText={(value) => setPhoto({ ...photo, title: value })}
                         placeholder="제목을 입력하세요."
                         style={styles.tinput}
                     ></TextInput>
-                    <Text style={styles.text}>내용</Text>
+                    <Text style={styles.content}>내용</Text>
                     <TextInput
                         multiline={true}
                         onChangeText={(value) => setPhoto({ ...photo, content: value })}
@@ -89,8 +101,8 @@ const PhotoAddScreen = ({ navigation }) => {
                     ></TextInput>
                 </TouchableWithoutFeedback>
             </View>
-            <View style={styles.btnview}>
-                <TouchableOpacity onPress={onSubmit} style={styles.btn}>
+            <View style={styles.submitbtnview}>
+                <TouchableOpacity onPress={onSubmit} style={styles.submitbtn}>
                     <Text>등록</Text>
                 </TouchableOpacity>
             </View>
@@ -100,6 +112,15 @@ const PhotoAddScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     text: {
+        flex: 1.5,
+        marginTop: 30,
+        marginLeft: 20,
+    },
+    title: {
+        marginTop: 30,
+        marginLeft: 20,
+    },
+    content: {
         marginTop: 30,
         marginLeft: 20,
     },
@@ -125,15 +146,29 @@ const styles = StyleSheet.create({
         backgroundColor: '#E6E6E6',
     },
     btnview: {
+        marginTop: 25,
+        marginBottom: 20,
+        flex: 0.3,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    submitbtnview: {
+        marginBottom: 30,
         flex: 0.3,
         justifyContent: 'center',
         alignItems: 'center',
     },
     btn: {
+        width: 70,
+        height: 45,
+        backgroundColor: '#D8D8D8',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    submitbtn: {
         width: 75,
-        height: 55,
-        marginTop: 10,
-        backgroundColor: '#A9D0F5',
+        height: 35,
+        backgroundColor: '#D8D8D8',
         justifyContent: 'center',
         alignItems: 'center',
     },

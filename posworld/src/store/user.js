@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { take, takeLatest } from "redux-saga/effects";
+import { takeLatest } from "redux-saga/effects";
 import produce from "immer";
 import {
   loginCheckValue,
@@ -49,7 +49,7 @@ const initialUser = {
   enableAccess: false, //
   isLogin: false,
   me: {},
-  myId: "",
+  myId: {},
 };
 
 //reducer
@@ -69,6 +69,7 @@ const user = (state = initialUser, action) =>
         break;
       case LOGIN_CHECK_SUCCESS:
         console.log("로그인체크 Success");
+        // console.log(action.data);
         draft.me = action.data;
         draft.myId = action.data.id;
         AsyncStorage.setItem("myId", `${action.data.id}`);

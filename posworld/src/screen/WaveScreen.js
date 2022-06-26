@@ -1,39 +1,18 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { countUserApi } from "../store/usersApi";
 
 function WaveScreen() {
   const navigation = useNavigation();
   const wave = async () => {
-    const userNum = await countUserApi();
-    const rand = Math.floor(Math.random() * userNum) + 1;
-    const id = await AsyncStorage.getItem("myId");
-
-    if (rand != id) {
-      alert(rand + "로 파도타기");
-      AsyncStorage.setItem("homeId", `${rand}`);
-      navigation.navigate("Photo");
-    }
-  };
-
-  const home = async () => {
-    const id = await AsyncStorage.getItem("myId");
-    AsyncStorage.setItem("homeId", `${id}`);
-    navigation.navigate("Home");
+    alert("wave!");
+    navigation.navigate("home");
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.buttonView}>
         <TouchableOpacity style={styles.loginBtn} onPress={wave}>
-          <Text style={styles.loginText}>{`❤  파도타기 ❤`}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonView}>
-        <TouchableOpacity style={styles.loginBtn} onPress={home}>
-          <Text style={styles.loginText}>{`❤  마이홈  ❤`}</Text>
+          <Text style={styles.loginText}>{`🏖  파도타기  🏝`}</Text>
         </TouchableOpacity>
       </View>
     </View>

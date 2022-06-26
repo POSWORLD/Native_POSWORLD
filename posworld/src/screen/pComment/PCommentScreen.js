@@ -14,8 +14,6 @@ import {
   deletePcomment,
 } from "../../store/pComments";
 import { useIsFocused } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 function PCommentScreen() {
   const dispatch = useDispatch();
   const pComments = useSelector((state) => state.pComments);
@@ -58,6 +56,7 @@ function PCommentScreen() {
   const onSubmit = async () => {
     await dispatch(createPcomment(message));
     await dispatch(selectPcomment(photoid));
+
     setText("");
     Notifications.scheduleNotificationAsync({
       content: {

@@ -1,3 +1,4 @@
+
 import { getHomeApi, updateHomeContentApi, updateHomePhotoApi } from './homesApi';
 import produce from 'immer';
 import { call, put, takeLatest } from '@redux-saga/core/effects';
@@ -16,6 +17,7 @@ export const updateContent = (params,id) => ({ type: UPDATE_HOME_CONTENT, params
 export const updatePhoto = (params,id) => ({ type: UPDATE_HOME_PHOTO, params,id });
 
 
+
 const initialHome = {
     id: 0,
     home: {},
@@ -26,8 +28,9 @@ const initialHome = {
 };
 
 const getHome = function* (action) {
+
     try {
-        console.log('응답하라 오바');
+    //    console.log('응답하라 오바');
         const result = yield call(getHomeApi, action.id);
         yield put({ type: READ_HOME_SUCCESS, data: result });
     } catch (err) {

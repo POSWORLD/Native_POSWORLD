@@ -9,7 +9,6 @@ import HomeHeaderScreen from './home/HomeHeaderScreen';
 import HomeMiniroomScreen from './home/HomeMiniroomScreen';
 
 function HomeScreen() {
-
     const dispatch = useDispatch();
     
     const isFocused = useIsFocused();

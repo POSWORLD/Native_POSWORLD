@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import HeaderScreen from "../HeaderScreen";
-
+import * as Notifications from "expo-notifications";
 import PCommentOneScreen from "./PCommentOneScreen";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
@@ -17,21 +17,27 @@ import { useIsFocused } from "@react-navigation/native";
 function PCommentScreen() {
   const dispatch = useDispatch();
   const pComments = useSelector((state) => state.pComments);
+  const myId = useSelector((state) => state.user.myId);
   const commentList = useSelector((state) => state.pComments.comments);
   const photoid = useSelector((state) => state.photos.pid);
-  console.log("commentList", commentList);
   const isFocused = useIsFocused();
 
   const onDelete = (id) => {
-    dispatch(deletePcomment(id, 1));
+    const myId = getId();
+    dispatch(deletePcomment(id, myId));
     commentPatch();
   };
 
   const [message, setMessage] = useState({
     pid: photoid,
     content: "",
-    userid: "1",
+    userid: myId,
   });
+
+  const getId = async () => {
+    const myId = await AsyncStorage.getItem("myId");
+    return myId;
+  };
 
   const [text, setText] = useState("");
 
@@ -47,15 +53,23 @@ function PCommentScreen() {
     });
   };
 
-  const onSubmit = () => {
-    dispatch(createPcomment(message));
+  const onSubmit = async () => {
+    await dispatch(createPcomment(message));
+    await dispatch(selectPcomment(photoid));
+
     setText("");
-    commentPatch();
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Times up!",
+        body: message.content,
+      },
+      trigger: 20,
+    });
   };
 
   useEffect(() => {
     commentPatch();
-  }, [isFocused]);
+  }, []);
   return (
     <>
       <HeaderScreen name="댓글" />

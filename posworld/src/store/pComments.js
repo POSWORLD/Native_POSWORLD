@@ -63,9 +63,7 @@ const selectPComment = function* (action) {
 
 const deletePComment = function* (action) {
   try {
-    console.log("action", action);
     const result = yield call(deletePCommentApi, action);
-    console.log("result", result);
     yield put({ type: DELETE_PCOMMENT_SUCCESS, data: result });
   } catch (err) {
     yield put({ type: DELETE_PCOMMENT_FAIL, data: err });
@@ -94,7 +92,6 @@ const pComments = (state = initialPcomment, action) =>
       case SELECT_PCOMMENT_SUCCESS:
         draft.loading = false;
         draft.success = true;
-        console.log("action.data", action.data);
         draft.comments = action.data;
         break;
       case SELECT_PCOMMENT_FAIL:
@@ -106,7 +103,6 @@ const pComments = (state = initialPcomment, action) =>
         draft.success = false;
         break;
       case DELETE_PCOMMENT_SUCCESS:
-        console.log("success delete");
         draft.loading = false;
         draft.success = true;
         draft.comments = action.data;

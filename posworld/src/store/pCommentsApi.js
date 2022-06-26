@@ -23,7 +23,7 @@ export const deletePCommentApi = async (action) => {
     const id = action.id;
     const userid = action.userid;
     const comments = action.comments;
-    console.log("이라ㅓㅁㄴ아ㅓㄻ낭러ㅣㄴasdfasdfasdfasdfasdfasdfasdfasdfsad");
+
     const response = await customAxios(
       `pComment/${Number(id)}/${Number(userid)}`,
       "delete"
@@ -33,8 +33,7 @@ export const deletePCommentApi = async (action) => {
       const delComment = await comments.filter((comment) => comment.id !== id);
       return delComment;
     }
-
-    return response;
+    return comments;
   } catch (error) {
     throw error;
   }

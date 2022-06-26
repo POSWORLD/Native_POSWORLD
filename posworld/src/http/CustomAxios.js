@@ -2,7 +2,6 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-
 axios.defaults.baseURL = "http://192.168.0.3:8001";
 export const IMG_PATH = "http://192.168.0.3:8001";
 const getToken = async () => {

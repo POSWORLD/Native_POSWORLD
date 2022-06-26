@@ -1,4 +1,5 @@
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+
 
 import { IMG_PATH } from '../../http/CustomAxios';
 import { useSelector, useDispatch } from 'react-redux';
@@ -30,15 +31,15 @@ function HomeMiniroomScreen() {
 }
 
 const styles = StyleSheet.create({
-    block: {
-        padding: 10,
-        borderBottomWidth: 1,
-        borderColor: '#ffffff',
-        backgroundColor: '#ffffff',
-    },
+  block: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderColor: "#ffffff",
+    backgroundColor: "#ffffff",
+  },
 
-    text: {
-        color: '#29b6f6',
-    },
+  text: {
+    color: "#29b6f6",
+  },
 });
 export default HomeMiniroomScreen;

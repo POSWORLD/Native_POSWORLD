@@ -72,6 +72,8 @@ const user = (state = initialUser, action) =>
         // console.log(action.data);
         draft.me = action.data;
         draft.myId = action.data.id;
+        AsyncStorage.setItem("myId", `${action.data.id}`);
+        AsyncStorage.setItem("homeId", `${action.data.id}`);
         break;
       case UPDATE_USER_SUCCESS:
         console.log("유저업데이트 Success");

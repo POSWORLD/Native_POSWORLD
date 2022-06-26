@@ -6,7 +6,7 @@ import { selectPhoto } from "../../store/photos";
 import { useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import PhotoGridItem from "./PhotoGridItem";
-function PhotoScreen() {
+function PhotoScreen({ navigation }) {
   const dispatch = useDispatch();
   const photos = useSelector((state) => state.photos);
   const photolist = useSelector((state) => state.photos.photo);
@@ -41,7 +41,7 @@ function PhotoScreen() {
           position="right"
           style={styles.fab}
           icon="plus"
-          onPress={() => console.log("Pressed")}
+          onPress={() => navigation.navigate("PhotoAdd")}
           size="small"
         />
       </View>

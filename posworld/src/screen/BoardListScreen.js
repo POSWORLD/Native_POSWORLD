@@ -1,4 +1,6 @@
+
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { IMG_PATH } from '../http/CustomAxios';
 import { deleteboard } from '../store/boards';
@@ -124,7 +126,9 @@ const styles = StyleSheet.create({
       marginLeft: 16,
       marginRight: 16,
    },
+
    subCardView: {
+
       height: 50,
       width: 50,
       borderRadius: 25,

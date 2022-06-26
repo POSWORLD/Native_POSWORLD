@@ -1,3 +1,4 @@
+
 import { ActivityIndicator, Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import HeaderScreen from './HeaderScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -73,21 +74,23 @@ const BoardScreen = ({ navigation }) => {
          </View>
       </View>
    );
+
 };
 
 export default BoardScreen;
 
 const styles = StyleSheet.create({
-   container: {
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'white',
-      resizeMode: 'contain',
-   },
-   /* boardlist: {
+  container: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "white",
+    resizeMode: "contain",
+  },
+  /* boardlist: {
       width: '100%',
       height: 900,
    }, */
+
    iconbutton: {
       position: 'absolute',
       margin: 16,

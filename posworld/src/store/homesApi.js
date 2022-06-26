@@ -1,5 +1,6 @@
-import { customAxios } from '../http/CustomAxios';
+import { customAxios } from "../http/CustomAxios";
 export const getHomeApi = async (id) => {
+
     try {
         
         const response = await customAxios(`home/${id}`, 'get');
@@ -27,4 +28,5 @@ export const updateHomePhotoApi = async (home,id) => {
     } catch (error) {
         throw error;
     }
+
 };

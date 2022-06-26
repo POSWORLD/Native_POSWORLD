@@ -1,3 +1,4 @@
+
 import { getHomeApi, updateHomeContentApi, updateHomePhotoApi } from './homesApi';
 import produce from 'immer';
 import { call, put, takeLatest } from '@redux-saga/core/effects';
@@ -14,16 +15,18 @@ export const select = (id) => ({ type: READ_HOME, id });
 export const updateContent = (params,id) => ({ type: UPDATE_HOME_CONTENT, params,id });
 export const updatePhoto = (params,id) => ({ type: UPDATE_HOME_PHOTO, params,id });
 
+
 const initialHome = {
-    id: 0,
-    home: {},
-    homeId:{},
-    loading: false,
-    success: false,
-    enableAccess: false,
+  id: 0,
+  home: {},
+  homeId: {},
+  loading: false,
+  success: false,
+  enableAccess: false,
 };
 
 const getHome = function* (action) {
+
     try {
         console.log('응답하라 오바');
         const result = yield call(getHomeApi, action.id);
@@ -51,55 +54,56 @@ const updateHomePhoto = function* (action) {
     } catch (err) {
         yield put({ type: UPDATE_HOME_PHOTO_FAIL, data: err });
     }
+
 };
 export function* HomeSaga() {
-    yield takeLatest(READ_HOME, getHome);
-    yield takeLatest(UPDATE_HOME_CONTENT, updateHomeContent);
-    yield takeLatest(UPDATE_HOME_PHOTO, updateHomePhoto);
+  yield takeLatest(READ_HOME, getHome);
+  yield takeLatest(UPDATE_HOME_CONTENT, updateHomeContent);
+  yield takeLatest(UPDATE_HOME_PHOTO, updateHomePhoto);
 }
 
 const homes = (state = initialHome, action) =>
-    produce(state, (draft) => {
-        switch (action.type) {
-            case UPDATE_HOME_CONTENT:
-                draft.loading = true;
-                draft.success = false;
-                break;
-            case UPDATE_HOME_CONTENT_SUCCESS:
-                draft.loading = false;
-                draft.success = true;
-                break;
-            case UPDATE_HOME_CONTENT_FAIL:
-                draft.loading = false;
-                draft.success = false;
-                break;
-            case UPDATE_HOME_PHOTO:
-                draft.loading = true;
-                draft.success = false;
-                break;
-            case UPDATE_HOME_PHOTO_SUCCESS:
-                draft.loading = false;
-                draft.success = true;
-                break;
-            case UPDATE_HOME_PHOTO_FAIL:
-                draft.loading = false;
-                draft.success = false;
-                break;
-            case READ_HOME:
-                draft.loading = true;
-                break;
-            case READ_HOME_SUCCESS:
-                console.log(action);
-                draft.home = action.data;
-                draft.homeId = action.data.id;
-                draft.loading = false;
-                draft.success = true;
-                break;
-            case READ_HOME_FAIL:
-                draft.loading = false;
-                break;
-            default:
-                return state;
-        }
-    });
+  produce(state, (draft) => {
+    switch (action.type) {
+      case UPDATE_HOME_CONTENT:
+        draft.loading = true;
+        draft.success = false;
+        break;
+      case UPDATE_HOME_CONTENT_SUCCESS:
+        draft.loading = false;
+        draft.success = true;
+        break;
+      case UPDATE_HOME_CONTENT_FAIL:
+        draft.loading = false;
+        draft.success = false;
+        break;
+      case UPDATE_HOME_PHOTO:
+        draft.loading = true;
+        draft.success = false;
+        break;
+      case UPDATE_HOME_PHOTO_SUCCESS:
+        draft.loading = false;
+        draft.success = true;
+        break;
+      case UPDATE_HOME_PHOTO_FAIL:
+        draft.loading = false;
+        draft.success = false;
+        break;
+      case READ_HOME:
+        draft.loading = true;
+        break;
+      case READ_HOME_SUCCESS:
+        // console.log(action);
+        draft.home = action.data;
+        draft.homeId = action.data.id;
+        draft.loading = false;
+        draft.success = true;
+        break;
+      case READ_HOME_FAIL:
+        draft.loading = false;
+        break;
+      default:
+        return state;
+    }
+  });
 export default homes;

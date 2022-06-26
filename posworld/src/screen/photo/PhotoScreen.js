@@ -6,14 +6,30 @@ import { selectPhoto } from "../../store/photos";
 import { useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import PhotoGridItem from "./PhotoGridItem";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 function PhotoScreen({ navigation }) {
   const dispatch = useDispatch();
   const photos = useSelector((state) => state.photos);
   const photolist = useSelector((state) => state.photos.photo);
 
+  const getHomeId = async () => {
+    return await AsyncStorage.getItem("homeId");
+  };
+
+  const getId = async () => {
+    return await AsyncStorage.getItem("myId");
+  };
+
   const isFocused = useIsFocused();
-  const getPhotolist = () => {
-    dispatch(selectPhoto());
+  const getPhotolist = async () => {
+    const homeId = await getHomeId();
+    if (homeId == undefined) {
+      const myId = await getId();
+      dispatch(selectPhoto(myId));
+    } else {
+      dispatch(selectPhoto(homeId));
+    }
   };
 
   useEffect(() => {

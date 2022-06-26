@@ -35,4 +35,5 @@ export const deletePhotoApi = async (action) => {
     } catch (error) {
         throw error;
     }
+
 };

@@ -1,9 +1,12 @@
 
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import { useDispatch, useSelector } from 'react-redux';
+import { IMG_PATH } from '../http/CustomAxios';
 import { deleteboard } from '../store/boards';
+import changeTime from './photo/changeTime';
 const BoardListScreen = ({ boarditem, boardlist }) => {
-   const myId = 1;
+   const myId = useSelector(state => state.user.me.id);
    const dispatch = useDispatch();
    const onRemove = () => {
       dispatch(deleteboard(boarditem.num, boardlist));
@@ -12,28 +15,64 @@ const BoardListScreen = ({ boarditem, boardlist }) => {
    return (
       <>
          <View style={styles.mainCardView}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+               <View style={styles.subCardView}>
+                  <Image
+                     source={{ uri: `${IMG_PATH}${boarditem.friendimg}` }}
+                     resizeMode="contain"
+                     style={{
+                        borderRadius: 25,
+                        height: 50,
+                        width: 50,
+                     }}
+                  />
+               </View>
+               <View style={{ marginLeft: 12 }}>
+                  <Text
+                     style={{
+                        fontSize: 14,
+                        color: 'black',
+                        fontWeight: 'bold',
+                        textTransform: 'capitalize',
+                     }}>
+                     {boarditem.friendname}
+                     <Text style={{ fontSize: 10 }}> ({changeTime(boarditem.wdate)})</Text>
+                  </Text>
+                  <View
+                     style={{
+                        marginTop: 4,
+                        borderWidth: 0,
+                        width: '100%',
+                     }}>
+                     <Text
+                        style={{
+                           color: 'gray',
+                           fontSize: 12,
+                        }}>
+                        {boarditem.content}
+                     </Text>
+                  </View>
+               </View>
+            </View>
             {boarditem.friendid === myId ? (
                <TouchableOpacity onPress={() => onRemove(boarditem.num)}>
-                  <Text>삭제</Text>
+                  <View
+                     style={{
+                        height: 25,
+                        backgroundColor: '#29b6f6',
+                        borderWidth: 0,
+                        width: 25,
+                        marginLeft: -26,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 50,
+                     }}>
+                     <Text style={{ color: `white` }}>X</Text>
+                  </View>
                </TouchableOpacity>
             ) : (
                <></>
             )}
-            <View>
-               <Text>내용:{boarditem.content}</Text>
-            </View>
-            <View>
-               <Text>닉네임:{boarditem.friendname} </Text>
-            </View>
-            <View style={styles.subCardView}>
-               <Text>img:{boarditem.friendimg} </Text>
-            </View>
-            <View>
-               <Text>작성자:{boarditem.wdate}</Text>
-            </View>
-            <View>
-               <Text>아이디: {boarditem.friendid}</Text>
-            </View>
          </View>
       </>
    );
@@ -87,7 +126,8 @@ const styles = StyleSheet.create({
       marginLeft: 16,
       marginRight: 16,
    },
-   /*  subCardView: {
+
+   subCardView: {
 
       height: 50,
       width: 50,
@@ -98,5 +138,5 @@ const styles = StyleSheet.create({
       borderStyle: 'solid',
       alignItems: 'center',
       justifyContent: 'center',
-   }, */
+   },
 });

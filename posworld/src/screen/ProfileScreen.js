@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,10 +15,10 @@ import { logout, updateUser } from "../store/user";
 
 
 function ProfileScreen({}) {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.me);
-  console.log("ProfileScreen");
-  console.log(user);
+   const dispatch = useDispatch();
+   const user = useSelector(state => state.user.me);
+   console.log('ProfileScreen');
+   console.log(user);
 
   const [form, setForm] = useState({
     userid: user.userid,
@@ -31,14 +32,16 @@ function ProfileScreen({}) {
     let permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({
-      base64: true,
-    });
+      if (permissionResult.granted === false) {
+         alert('Permission to access camera roll is required!');
+         return;
+      }
+
+      let pickerResult = await ImagePicker.launchImageLibraryAsync({
+         base64: true,
+      });
+
 
     const splitUri = pickerResult.uri.split("/");
     const prophoto = `${splitUri[splitUri.length - 1]}`;
@@ -70,23 +73,22 @@ function ProfileScreen({}) {
   //   dispatch(deleteUser(user.id));
   // };
 
-  return (
-    <View style={styles.container}>
-      <HomeHeaderScreen></HomeHeaderScreen>
-      <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <TouchableOpacity onPress={openImagePickerAsync}>
-            {previewImg ? (
-              <Image source={{ uri: previewImg }} style={styles.avatar}></Image>
-            ) : (
-              <Image
-                style={styles.avatar}
-                source={require("./img/minimi.png")}
-              />
-            )}
-          </TouchableOpacity>
-        </View>
-      </View>
+
+   return (
+      <View style={styles.container}>
+         <HomeHeaderScreen></HomeHeaderScreen>
+         <View style={styles.header}>
+            <View style={styles.headerContent}>
+               <TouchableOpacity onPress={openImagePickerAsync}>
+                  {previewImg ? (
+                     <Image source={{ uri: previewImg }} style={styles.avatar}></Image>
+                  ) : (
+                     <Image style={styles.avatar} source={require('./img/minimi.png')} />
+                  )}
+               </TouchableOpacity>
+            </View>
+         </View>
+
 
       <View style={styles.body}>
         <View style={styles.item}>
@@ -110,47 +112,47 @@ function ProfileScreen({}) {
             <Text style={styles.profileText}>회원탈퇴</Text>
           </TouchableOpacity>
         </View>
+
       </View>
-    </View>
-  );
+   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "white",
-  },
-  headerContent: {
-    padding: 30,
-    alignItems: "center",
-  },
-  avatar: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
-    borderWidth: 4,
-    borderColor: "white",
-    marginBottom: 10,
-  },
-  body: {
-    backgroundColor: "white",
-    height: 500,
-    alignItems: "center",
-  },
-  item: {
-    margin: 2,
-    flexDirection: "row",
-  },
-  profileBtn: {
-    borderRadius: 15,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 40,
-    backgroundColor: "#29b6f6",
-    flex: 0.72,
-  },
-  profileText: {
-    color: "white",
-  },
+   header: {
+      backgroundColor: 'white',
+   },
+   headerContent: {
+      padding: 30,
+      alignItems: 'center',
+   },
+   avatar: {
+      width: 130,
+      height: 130,
+      borderRadius: 63,
+      borderWidth: 4,
+      borderColor: 'white',
+      marginBottom: 10,
+   },
+   body: {
+      backgroundColor: 'white',
+      height: 500,
+      alignItems: 'center',
+   },
+   item: {
+      margin: 2,
+      flexDirection: 'row',
+   },
+   profileBtn: {
+      borderRadius: 15,
+      height: 50,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 40,
+      backgroundColor: '#29b6f6',
+      flex: 0.72,
+   },
+   profileText: {
+      color: 'white',
+   },
 });
 export default ProfileScreen;

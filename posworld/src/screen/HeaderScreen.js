@@ -1,16 +1,24 @@
-import { StyleSheet, Text, View } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StyleSheet, Text, Touchable, View } from "react-native";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 function HeaderScreen({ name }) {
   const { top } = useSafeAreaInsets();
+  const navigation = useNavigation();
   return (
     <>
       <View style={[styles.statusBarPlaceholder, { height: top }]} />
       <View style={styles.block}>
         <View style={styles.container}>
-          <View style={styles.item1}>
-            <AntDesign name="left" size={24}></AntDesign>
-          </View>
+          <TouchableOpacity
+            onPress={() => navigation.goBack}
+            style={{ justifyContent: "center", textAlign: "center" }}
+          >
+            <View style={styles.item1}>
+              <AntDesign name="left" size={24}></AntDesign>
+            </View>
+          </TouchableOpacity>
           <Text style={styles.nameText}>{name}</Text>
         </View>
       </View>
@@ -20,11 +28,12 @@ function HeaderScreen({ name }) {
 
 const styles = StyleSheet.create({
   statusBarPlaceholder: {
-    backgroundColor: "#26a69a",
+    backgroundColor: "#29b6f6",
   },
   block: {
     padding: 16,
     borderBottomWidth: 1,
+    backgroundColor: "#29b6f6",
     borderColor: "#B0ACAC",
   },
   nameText: {

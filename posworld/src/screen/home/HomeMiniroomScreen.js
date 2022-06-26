@@ -12,10 +12,10 @@ function HomeMiniroomScreen() {
     const isFocused = useIsFocused();
     
     const home = useSelector((state) => state.homes.home);
-    const id = useSelector((state)=>state.user.myId );
+    
     useEffect(() => {
         
-        dispatch(select(id));
+        dispatch(select(home.id));
     }, [isFocused]);
     return (
         <>

@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { takeLatest } from "redux-saga/effects";
+import { take, takeLatest } from "redux-saga/effects";
 import produce from "immer";
 import {
   loginCheckValue,
@@ -7,6 +7,7 @@ import {
   updateUserValue,
   logoutValue,
   signUpValue,
+  deleteValue,
 } from "./usersApi";
 import {
   INIT,
@@ -22,6 +23,9 @@ import {
   SIGNUP,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
+  DELETE,
+  DELETE_SUCCESS,
+  DELETE_FAIL,
 } from "./actionType";
 
 //액션 함수
@@ -31,6 +35,7 @@ export const loginCheck = (params) => ({ type: LOGIN_CHECK, params });
 export const updateUser = (params) => ({ type: UPDATE_USER, params });
 export const logout = () => ({ type: LOGOUT });
 export const signUp = (params) => ({ type: SIGNUP, params });
+export const deleteUser = (params) => ({ type: DELETE, params });
 
 //사가함수
 export function* UserSaga() {
@@ -39,6 +44,7 @@ export function* UserSaga() {
   yield takeLatest(UPDATE_USER, updateUserValue);
   yield takeLatest(LOGOUT, logoutValue);
   yield takeLatest(SIGNUP, signUpValue);
+  yield takeLatest(DELETE, deleteValue);
 }
 
 //초기상태
@@ -49,7 +55,7 @@ const initialUser = {
   enableAccess: false, //
   isLogin: false,
   me: {},
-  myId: {},
+  myId: "",
 };
 
 //reducer
@@ -93,6 +99,12 @@ const user = (state = initialUser, action) =>
         break;
       case SIGNUP_FAIL:
         alert("회원가입에 실패했습니다.");
+        break;
+      case DELETE_SUCCESS:
+        alert("회원탈퇴가 완료되었습니다");
+        break;
+      case DELETE_FAIL:
+        alert("회원탈퇴에 실패했습니다.");
         break;
       default:
         return state;

@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { login } from "../store/user";
 import { useNavigation } from "@react-navigation/native";
+import { registerIndieID } from "native-notify";
+import axios from "axios";
 
 const LoginScreen = () => {
   const dispath = useDispatch();
@@ -27,6 +29,18 @@ const LoginScreen = () => {
   };
   const onSubmit = async () => {
     await dispath(login(user));
+
+    // Native Notify Indie Push Registration Code
+    registerIndieID(`${user.userid}`, 3075, "wHKKgo5pwhDtUMXZIyaSUk");
+    // // End of Native Notify Code
+
+    axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+      subID: `${user.userid}`,
+      appId: 3075,
+      appToken: "wHKKgo5pwhDtUMXZIyaSUk",
+      title: `${user.userid}님, 로그인 되었습니다.`,
+      message: "본인이 아닐 경우 위험합니다.",
+    });
   };
 
   return (

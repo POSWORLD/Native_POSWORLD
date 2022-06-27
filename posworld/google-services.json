@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "493413844784",
+    "project_id": "expo-push-675d9",
+    "storage_bucket": "expo-push-675d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493413844784:android:a25b3252d103df9ac3aaf5",
+        "android_client_info": {
+          "package_name": "com.posco.posworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493413844784-2qpla8utpnc9uik27jhicv8oirnvh5dm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs2xIgjPst_BKmHlS70umSUTUfwmDYHRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493413844784-2qpla8utpnc9uik27jhicv8oirnvh5dm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

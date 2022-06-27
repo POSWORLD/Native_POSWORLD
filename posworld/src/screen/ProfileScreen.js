@@ -10,13 +10,12 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import HomeHeaderScreen from "./home/HomeHeaderScreen";
-import { logout, updateUser } from "../store/user";
+import { logout, updateUser, deleteUser } from "../store/user";
 
 function ProfileScreen({}) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.me);
   console.log("ProfileScreen");
-  console.log(user);
 
   const [form, setForm] = useState({
     userid: user.userid,
@@ -25,7 +24,8 @@ function ProfileScreen({}) {
     name: user.name,
   });
 
-  const [previewImg, setPreviewImg] = useState("");
+  const IMG_PATH = "http://192.168.0.40:8001/img/";
+  const [previewImg, setPreviewImg] = useState(`${IMG_PATH}${user.prophoto}`);
   let openImagePickerAsync = async () => {
     let permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -58,33 +58,32 @@ function ProfileScreen({}) {
 
   const onSubmit = () => {
     dispatch(updateUser(form));
-    // navigation.goBack();
   };
 
   const logoutBtn = () => {
     dispatch(logout());
   };
 
+  const withdrawal = () => {
+    dispatch(deleteUser(user.id));
+    dispatch(logout());
+  };
+
   return (
-    <>
-      <View style={styles.container}>
-        <HomeHeaderScreen></HomeHeaderScreen>
-        <View style={styles.header}>
-          <View style={styles.headerContent}>
-            <TouchableOpacity onPress={openImagePickerAsync}>
-              {previewImg ? (
-                <Image
-                  source={{ uri: previewImg }}
-                  style={styles.avatar}
-                ></Image>
-              ) : (
-                <Image
-                  style={styles.avatar}
-                  source={require("./img/minimi.png")}
-                />
-              )}
-            </TouchableOpacity>
-          </View>
+    <View style={styles.container}>
+      <HomeHeaderScreen></HomeHeaderScreen>
+      <View style={styles.header}>
+        <View style={styles.headerContent}>
+          <TouchableOpacity onPress={openImagePickerAsync}>
+            {previewImg ? (
+              <Image source={{ uri: previewImg }} style={styles.avatar}></Image>
+            ) : (
+              <Image
+                style={styles.avatar}
+                source={require("./img/minimi.png")}
+              />
+            )}
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.body}>
@@ -105,12 +104,12 @@ function ProfileScreen({}) {
           </TouchableOpacity>
         </View>
         <View style={styles.item}>
-          <TouchableOpacity style={styles.profileBtn} onPress={logoutBtn}>
+          <TouchableOpacity style={styles.profileBtn} onPress={withdrawal}>
             <Text style={styles.profileText}>회원탈퇴</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </>
+    </View>
   );
 }
 
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: "white",
-    height: 500,
+    height: 700,
     alignItems: "center",
   },
   item: {

@@ -14,6 +14,7 @@ import {
   SIGNUP_FAIL,
   DELETE_SUCCESS,
   DELETE_FAIL,
+  GET_USER_SUCCESS,
 } from "./actionType";
 
 export const loginValue = function* (action) {
@@ -100,7 +101,7 @@ export const countUserApi = async () => {
 };
 
 export const deleteValue = function* (action) {
-  console.log("value", action);
+  // console.log("value", action);
   try {
     const result = yield call(deleteUserApi, action.params);
     yield put({ type: DELETE_SUCCESS, data: true });
@@ -110,7 +111,17 @@ export const deleteValue = function* (action) {
 };
 
 export const deleteUserApi = async (id) => {
-  console.log(id);
   const response = customAxios(`/member/${id}`, "delete");
   return response.data;
+};
+
+export const getUserValue = function* (action) {
+  const result = yield call(getUserApi, action.params);
+  console.log("result<<<<<<", result);
+  yield put({ type: GET_USER_SUCCESS, data: result.userid });
+};
+
+export const getUserApi = (id) => {
+  const response = customAxios(`member/${id}`, "get");
+  return response;
 };

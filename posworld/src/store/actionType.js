@@ -19,3 +19,6 @@ export const COUNT_USER_FAIL = "COUNT_USER_FAIL";
 export const DELETE = "DELETE";
 export const DELETE_SUCCESS = "DELETE_SUCCESS";
 export const DELETE_FAIL = "DELETE_FAIL";
+export const GET_USER = "GET_USER";
+export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
+export const GET_USER_FAIL = "GET_USER_FAIL";

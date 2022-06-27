@@ -7,13 +7,15 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { AntDesign } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createboard } from "../store/boards";
-import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { getUserApi } from "../store/usersApi";
 
 const BoardAddScreen = ({ navigation }) => {
+  const user = useSelector((state) => state.user.me);
+
   const getHomeId = async () => {
     return await AsyncStorage.getItem("homeId");
   };
@@ -41,6 +43,18 @@ const BoardAddScreen = ({ navigation }) => {
     form["homeId"] = homeId;
     // console.log(form);
     dispatch(createboard(form));
+
+    const homeUserId = await getUserApi(homeId);
+    const ownerId = homeUserId.userid;
+
+    axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+      subID: `${ownerId}`,
+      appId: 3075,
+      appToken: "wHKKgo5pwhDtUMXZIyaSUk",
+      title: `${user.userid}님이 방명록을 남겼습니다.`,
+      message: "댓글을 달아주세요!",
+    });
+
     navigation.goBack();
   };
   return (

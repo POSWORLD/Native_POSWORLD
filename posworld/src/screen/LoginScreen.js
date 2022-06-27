@@ -38,7 +38,7 @@ const LoginScreen = () => {
       subID: `${user.userid}`,
       appId: 3075,
       appToken: "wHKKgo5pwhDtUMXZIyaSUk",
-      title: `${user.userid}님, 로그인 되었습니다.`,
+      title: `${user.userid}님, 로그인 시도가 있었습니다.`,
       message: "본인이 아닐 경우 위험합니다.",
     });
   };

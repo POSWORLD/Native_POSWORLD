@@ -11,6 +11,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import HomeHeaderScreen from "./home/HomeHeaderScreen";
 import { logout, updateUser, deleteUser } from "../store/user";
+import { IMG_PATH } from "../http/CustomAxios";
 
 function ProfileScreen({}) {
   const dispatch = useDispatch();
@@ -24,7 +25,6 @@ function ProfileScreen({}) {
     name: user.name,
   });
 
-  const IMG_PATH = "http://192.168.0.40:8001/img/";
   const [previewImg, setPreviewImg] = useState(`${IMG_PATH}${user.prophoto}`);
   let openImagePickerAsync = async () => {
     let permissionResult =

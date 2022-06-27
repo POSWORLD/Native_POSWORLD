@@ -17,7 +17,7 @@ import {
 } from "./actionType";
 
 export const loginValue = function* (action) {
-  // console.log("loginValue들어옴");
+  console.log("loginValue들어옴");
   try {
     const result = yield call(loginApi, action);
     yield put({ type: LOGIN_SUCCESS, data: result }); //put : 특성 액션을 디스패치
@@ -114,23 +114,3 @@ export const deleteUserApi = async (id) => {
   const response = customAxios(`/member/${id}`, "delete");
   return response.data;
 };
-
-// export const idCheckApi = async (user) => {
-//   const response = await axios({
-//     url: "http://localhost:8001/auth/checkId",
-//     method: "post",
-//     data: user,
-//   });
-//   return response.data;
-// };
-
-// export const getUserApi = async (id) => {
-//   const response = await axios({
-//     url: `http://localhost:8001/member/${id}`,
-//     method: "get",
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem("token")}`,
-//     },
-//   });
-//   return response.data;
-// };

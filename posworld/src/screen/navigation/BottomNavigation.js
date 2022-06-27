@@ -18,7 +18,7 @@ function BottomNavigation() {
       initialRouteName="MiniRoom"
       screenOptions={{
         tabBarIndicatorStyle: {
-          backgroundColor: "#009688",
+          backgroundColor: "#f5f5f5",
         },
         tabBarActiveTintColor: "#009688",
       }}

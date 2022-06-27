@@ -39,9 +39,7 @@ function WaveScreen() {
     </View>
   );
 }
-
 export default WaveScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

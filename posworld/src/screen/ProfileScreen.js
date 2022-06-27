@@ -86,7 +86,6 @@ function ProfileScreen({}) {
           </TouchableOpacity>
         </View>
       </View>
-
       <View style={styles.body}>
         <View style={styles.item}>
           <TextInput
@@ -152,4 +151,5 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
+
 export default ProfileScreen;

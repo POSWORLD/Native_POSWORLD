@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+} from "react-native";
 import HeaderScreen from "../HeaderScreen";
 import * as Notifications from "expo-notifications";
 import PCommentOneScreen from "./PCommentOneScreen";
@@ -72,7 +78,6 @@ function PCommentScreen() {
   }, []);
   return (
     <>
-      <HeaderScreen name="댓글" />
       <View style={styles.message}>
         <AntDesign name="message1" size={18}></AntDesign>
         <Text style={styles.messageText}>
@@ -98,13 +103,15 @@ function PCommentScreen() {
         )}
       </View>
       <View style={styles.textInputDiv}>
-        <TextInput
-          mode="outlined"
-          value={text}
-          placeholder="따뜻한 댓글을 남겨주세요"
-          onChangeText={(value) => onChangeTextHandler("content", value)}
-          style={styles.textInput}
-        ></TextInput>
+        <KeyboardAvoidingView>
+          <TextInput
+            mode="outlined"
+            value={text}
+            placeholder="따뜻한 댓글을 남겨주세요"
+            onChangeText={(value) => onChangeTextHandler("content", value)}
+            style={styles.textInput}
+          ></TextInput>
+        </KeyboardAvoidingView>
         <View style={styles.touchButton}>
           <TouchableOpacity style={styles.button} onPress={() => onSubmit()}>
             <Feather name="send" style={styles.featherIcon} size={30}></Feather>
@@ -128,7 +135,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     flex: 0.8,
     bottom: 3,
-    margin: 5,
+    margin: -10,
+    padding: 3,
     justifyContent: "center",
   },
   featherIcon: {
@@ -141,12 +149,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     justifyContent: "center",
-    padding: 1,
-    margin: 5,
     alignItems: "center",
+    height: 30,
+    padding: 15,
+    margin: 2,
   },
   touchButton: {
-    flex: 0.2,
+    flex: 0.7,
     textAlign: "right",
   },
   button: {

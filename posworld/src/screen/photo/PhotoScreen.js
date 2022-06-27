@@ -14,6 +14,7 @@ function PhotoScreen({ navigation }) {
   const isFocused = useIsFocused();
   const getPhotolist = async () => {
     const homeid = await AsyncStorage.getItem("homeId");
+    console.log(homeid);
     dispatch(selectPhoto(homeid));
   };
 
@@ -36,7 +37,7 @@ function PhotoScreen({ navigation }) {
           />
         )}
       </View>
-      <View style={{ flex: 1.2 }}>
+      <View style={{ flex: 1 }}>
         <FAB
           position="right"
           style={styles.fab}

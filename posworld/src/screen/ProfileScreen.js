@@ -24,7 +24,7 @@ function ProfileScreen({}) {
     name: user.name,
   });
 
-  const IMG_PATH = "http://192.168.0.61:8001/img/";
+  const IMG_PATH = "http://192.168.0.40:8001/img/";
   const [previewImg, setPreviewImg] = useState(`${IMG_PATH}${user.prophoto}`);
   let openImagePickerAsync = async () => {
     let permissionResult =

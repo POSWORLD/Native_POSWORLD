@@ -8,6 +8,7 @@ import {
   logoutValue,
   signUpValue,
   deleteValue,
+  getUserValue,
 } from "./usersApi";
 import {
   INIT,
@@ -26,6 +27,8 @@ import {
   DELETE,
   DELETE_SUCCESS,
   DELETE_FAIL,
+  GET_USER,
+  GET_USER_SUCCESS,
 } from "./actionType";
 
 //액션 함수
@@ -36,6 +39,7 @@ export const updateUser = (params) => ({ type: UPDATE_USER, params });
 export const logout = () => ({ type: LOGOUT });
 export const signUp = (params) => ({ type: SIGNUP, params });
 export const deleteUser = (params) => ({ type: DELETE, params });
+export const getUser = (params) => ({ type: GET_USER, params });
 
 //사가함수
 export function* UserSaga() {
@@ -45,6 +49,7 @@ export function* UserSaga() {
   yield takeLatest(LOGOUT, logoutValue);
   yield takeLatest(SIGNUP, signUpValue);
   yield takeLatest(DELETE, deleteValue);
+  yield takeLatest(GET_USER, getUserValue);
 }
 
 //초기상태
@@ -56,6 +61,7 @@ const initialUser = {
   isLogin: false,
   me: {},
   myId: "",
+  homeUserId: "",
 };
 
 //reducer
@@ -105,6 +111,8 @@ const user = (state = initialUser, action) =>
         break;
       case DELETE_FAIL:
         alert("회원탈퇴에 실패했습니다.");
+        break;
+      case GET_USER_SUCCESS:
         break;
       default:
         return state;

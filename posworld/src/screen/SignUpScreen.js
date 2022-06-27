@@ -12,6 +12,7 @@ import {
 import { signUp } from "../store/user";
 import { RadioButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { registerIndieID } from "native-notify";
 
 const SignUpScreen = () => {
   const dispath = useDispatch();
@@ -30,6 +31,9 @@ const SignUpScreen = () => {
   };
   const onSubmit = async () => {
     await dispath(signUp(user));
+    // Native Notify Indie Push Registration Code
+    registerIndieID(`${user.userid}`, 3075, "wHKKgo5pwhDtUMXZIyaSUk");
+    // // End of Native Notify Code
     await navigation.navigate("login");
   };
 

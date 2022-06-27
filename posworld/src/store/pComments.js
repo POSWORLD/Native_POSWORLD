@@ -46,7 +46,10 @@ export function* pCommentSaga() {
 const postPComment = function* (action) {
   try {
     const result = yield call(postPCommentApi, action.params);
-    yield put({ type: CREATE_PCOMMENT_SUCCESS, data: result });
+    yield put({
+      type: CREATE_PCOMMENT_SUCCESS,
+      data: { result, data: action.params },
+    });
   } catch (err) {
     yield put({ type: CREATE_PCOMMENT_FAIL, data: err });
   }
@@ -55,6 +58,7 @@ const postPComment = function* (action) {
 const selectPComment = function* (action) {
   try {
     const result = yield call(selectPCommentApi, action.pid);
+    console.log("result", result);
     yield put({ type: SELECT_PCOMMENT_SUCCESS, data: result });
   } catch (err) {
     yield put({ type: SELECT_PCOMMENT_FAIL, data: err });
@@ -80,6 +84,7 @@ const pComments = (state = initialPcomment, action) =>
       case CREATE_PCOMMENT_SUCCESS:
         draft.loading = false;
         draft.success = true;
+        draft.comments = draft.comments;
         break;
       case CREATE_PCOMMENT_FAIL:
         draft.success = false;

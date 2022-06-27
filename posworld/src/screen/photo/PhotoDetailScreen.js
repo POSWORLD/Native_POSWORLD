@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     btnview: {
         justifyContent: 'center',
         alignItems: 'flex-end',
-        marginRight: 20,
+        marginRight: 21,
     },
     btn: {
         width: 60,

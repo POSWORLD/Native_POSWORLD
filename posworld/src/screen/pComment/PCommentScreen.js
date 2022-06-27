@@ -13,6 +13,8 @@ import Feather from "react-native-vector-icons/Feather";
 import { TextInput } from "react-native-paper";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+
 import { useEffect, useState } from "react";
 import {
   createPcomment,
@@ -27,6 +29,7 @@ function PCommentScreen() {
   const commentList = useSelector((state) => state.pComments.comments);
   const photoid = useSelector((state) => state.photos.pid);
   const isFocused = useIsFocused();
+  const navigation = useNavigation();
 
   const onDelete = (id) => {
     const myId = getId();
@@ -62,20 +65,12 @@ function PCommentScreen() {
   const onSubmit = async () => {
     await dispatch(createPcomment(message));
     await dispatch(selectPcomment(photoid));
-
     setText("");
-    Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Times up!",
-        body: message.content,
-      },
-      trigger: 20,
-    });
   };
 
   useEffect(() => {
     commentPatch();
-  }, []);
+  }, [isFocused]);
   return (
     <>
       <View style={styles.message}>

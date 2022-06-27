@@ -124,12 +124,13 @@ const styles = StyleSheet.create({
   },
   btnview: {
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-end",
+    marginRight: 21,
   },
   btn: {
-    width: 75,
-    height: 55,
-    backgroundColor: "#A9D0F5",
+    width: 60,
+    height: 35,
+    backgroundColor: "#D8D8D8",
     justifyContent: "center",
     alignItems: "center",
   },
